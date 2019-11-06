@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.groupseven.voicestamp">
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- SD卡权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_vs"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.mainTransparent">
+        <activity
+            android:name=".recoder.RecordPlayActivity"
+            android:label="@string/title_activity_record_play"
+            android:theme="@style/AppTheme.Main.Base"></activity>
+        <activity
+            android:name=".login.ui.login.LoginActivity"
+            android:theme="@style/Theme.imgFullScreen" />
+        <activity
+            android:name=".mainlist.activity.MainActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.Main.Base" />
+        <activity
+            android:name=".recoder.RecorderMainActivity"
+            android:theme="@style/AppTheme.Main.Base" />
+
+        <activity
+            android:name=".mainlist.activity.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main.Splash"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/black"
+    tools:context=".recoder.RecorderMainActivity">
+
+    <TextView
+        android:id="@+id/unit_voice_record_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Recording"
+        android:layout_marginTop="100dp"
+        android:textColor="@android:color/white"
+        android:textSize="48sp" />
+
+    <com.groupseven.voicestamp.views.WaveView
+        android:id="@+id/waveView"
+        android:layout_below="@id/unit_voice_record_text"
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_height="200dp"
+        app:wvType="centerLine"
+        app:wvCenterLineColor="@android:color/black"
+        app:wvCenterLineWidth="1dp"
+        app:wvLineColor="#b2ccd2"
+        app:wvLineWidth="2dp"
+        app:wvLineSpace="5dp"/>
+
+
+    <ImageView
+        android:id="@+id/img_popularize"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/record_top_bg"/>
+
+    <include
+        android:id="@+id/layout_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/unit_voice_play"
+        />
+
+    <TextView
+        android:id="@+id/unit_voice_record_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="00:00:00"
+        android:layout_marginTop="470dp"
+        android:textColor="@android:color/white"
+        android:textSize="56sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        >
+
+        <Button
+            android:id="@+id/btn_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@mipmap/record_note"
+            />
+
+
+        <ImageView
+            android:id="@+id/unit_voice_record_operate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/record_pause_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true"
+            />
+
+        <Button
+            android:id="@+id/unit_voice_record_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/record_finish_bg"
+            />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="录音回放"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

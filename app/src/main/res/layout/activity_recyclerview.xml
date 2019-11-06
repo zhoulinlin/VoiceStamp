@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_head_img"
+        android:id="@+id/toolbar_img_title"/>
+
+    <com.groupseven.voicestamp.mainlist.views.SlideRecyclerView
+        android:id="@+id/recycler_view_list"
+        android:divider="@null"
+        android:layout_below="@id/toolbar_img_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/record_btn"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/record_start_play"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        ></Button>
+
+
+</RelativeLayout>

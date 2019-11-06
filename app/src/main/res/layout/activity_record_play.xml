@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".recoder.RecordPlayActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/record_play_bg"/>
+
+
+
+    <ImageView
+        android:id="@+id/unit_voice_play_operate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:src="@mipmap/record_start_play" />
+
+    <ImageView
+        android:id="@+id/iv_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="178dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/unit_voice_play_operate"
+        android:src="@mipmap/record_play_pre" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/unit_voice_play_operate"
+        android:layout_marginTop="178dp"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/record_play_next" />
+
+
+
+    <SeekBar
+        android:id="@+id/unit_voice_play_progress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:progressDrawable="@drawable/playbar_style"
+        android:thumb="@mipmap/record_play_progress_thum_bg"
+        android:thumbOffset="0dp" />
+
+
+    <ImageView
+        android:id="@+id/unit_voice_play_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="15dp"
+        android:src="@mipmap/voice_stop" />
+
+
+    <TextView
+        android:id="@+id/unit_voice_play_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/unit_voice_play_progress"
+        android:layout_below="@id/unit_voice_play_progress"
+        android:gravity="center"
+        android:text="00:00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/unit_voice_play_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/unit_voice_play_progress"
+        android:layout_below="@id/unit_voice_play_progress"
+        android:gravity="center"
+        android:text="00:00:00"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+
+    <com.groupseven.voicestamp.mainlist.views.SlideRecyclerView
+        android:id="@+id/recycler_view_list"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

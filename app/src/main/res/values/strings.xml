@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">VoiceStamp</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="title_activity_login">Sign in</string>
+    <!--    <string name="prompt_email">Email</string>-->
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign Up</string>
+
+    <string name="action_sign_in_or_up">Sign in   Sign Up</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_agreement"><u>Agree With Term and Condition</u></string>
+
+    <!--    <string name="app_name">mediarecorder</string>-->
+    <string name="record_fail">Record fail</string>
+    <string name="time_too_short">Too short, please try again</string>
+    <string name="play_over">Finish</string>
+    <string name="play_error">error</string>
+    <string name="stop_by_up">release to stop</string>
+    <string name="speak_by_press">press to speak</string>
+    <string name="start_record">start record</string>
+    <string name="stop_record">stop</string>
+    <string name="play_fail_for_not_exist">play fail! File not exis</string>
+
+    <string name="cancel">cancel</string>
+    <string name="sure">Yes</string>
+    <string name="title_activity_record_play">RecordPlayActivity</string>
+</resources>

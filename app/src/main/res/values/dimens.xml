@@ -1,0 +1,19 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="base_dialog_btn">44dp</dimen>
+
+    <dimen name="new_alert_button_text">16dp</dimen> <!-- 确认框和警告框的按钮 -->
+    <dimen name="new_alert_title_text">20dp</dimen> <!-- 确认框和警告框的标题 -->
+    <dimen name="new_alert_content_text">16dp</dimen> <!-- 确认框和警告框的内容文本 -->
+
+
+    <dimen name="ToolBarBackTextPadiing">16dp</dimen>
+    <dimen name="ToolBarTextPadiing">15dp</dimen>
+    <dimen name="ToolBarMainTextSize">20sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

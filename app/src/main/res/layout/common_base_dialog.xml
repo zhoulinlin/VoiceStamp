@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/dialog_round_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearlayout_head_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"></FrameLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="#D3D5D9" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:layout_weight="1"
+                android:contentDescription="@string/cancel"
+                android:singleLine="true"
+                android:text="@string/cancel"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="@color/dialog_btn_text_color"
+                android:textSize="@dimen/new_alert_button_text" />
+
+            <View
+                android:id="@+id/vertical_line1"
+                android:layout_width="0.5dp"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:background="#D3D5D9"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:layout_weight="1"
+                android:contentDescription="@string/sure"
+                android:singleLine="true"
+                android:text="@string/sure"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="#FF8E00"
+                android:textSize="@dimen/new_alert_button_text" />
+
+            <View
+                android:id="@+id/vertical_line2"
+                android:layout_width="0.5dp"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:background="#D3D5D9"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btn3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="@string/sure"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="@color/dialog_btn_text_color"
+                android:textSize="@dimen/new_alert_button_text"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btn4"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dialog_btn"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="@string/sure"
+                android:gravity="center_horizontal|center_vertical"
+                android:textColor="@color/dialog_btn_text_color"
+                android:textSize="@dimen/new_alert_button_text"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

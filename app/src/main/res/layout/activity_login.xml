@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.ui.login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/img_popularize"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/top_bg_signin"/>
+
+    <Button
+        android:id="@+id/select_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@mipmap/login_bg_sighin"
+        android:layout_centerHorizontal="true"
+        android:text="@string/action_sign_in_or_up"
+        />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dip"
+        android:layout_marginRight="160dp"
+        android:layout_below="@+id/select_action"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:drawableRight="@mipmap/login_main_icon"
+        android:selectAllOnFocus="true"
+       />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginRight="160dp"
+        android:layout_marginTop="25dp"
+        android:hint="@string/prompt_password"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:layout_centerHorizontal="true"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:drawableRight="@mipmap/login_password_icon"
+        android:selectAllOnFocus="true"
+         />
+
+    <RadioButton
+        android:id="@+id/rbtn_agreement"
+        android:layout_below="@+id/password"
+        android:layout_width="wrap_content"
+        android:singleLine="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/darker_gray"
+        android:layout_height="wrap_content"
+        android:text="@string/login_agreement"
+        >
+    </RadioButton>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="180dp"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rbtn_agreement"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/login_btn_bg"
+        android:enabled="false"
+        android:textColor="@android:color/white"
+        android:text="@string/action_sign_in"
+       />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+    />
+</RelativeLayout>
