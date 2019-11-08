@@ -2,8 +2,12 @@ package com.groupseven.voicestamp.mainlist.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -15,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groupseven.voicestamp.R;
 import com.groupseven.voicestamp.db.DBController;
 import com.groupseven.voicestamp.db.bean.Record;
+import com.groupseven.voicestamp.mainlist.adapter.BaseRecyclerViewAdapter;
 import com.groupseven.voicestamp.mainlist.adapter.RecordAdapter;
 import com.groupseven.voicestamp.mainlist.views.SlideRecyclerView;
+import com.groupseven.voicestamp.recoder.RecordPlayActivity;
 import com.groupseven.voicestamp.recoder.RecorderMainActivity;
 import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
 
@@ -24,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private SlideRecyclerView recycler_view_list;
     private List<Record> mRecords;
@@ -36,11 +42,14 @@ public class MainActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
+
+        setStatusBarFullTransparent();
+        setFitSystemWindow(false);
+
         recycler_view_list = (SlideRecyclerView) findViewById(R.id.recycler_view_list);
         recycler_view_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         startBtn = findViewById(R.id.record_btn);
@@ -53,13 +62,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDeleteClick(View view, int position) {
 
-                if(DBController.getInstance().getRecordDao().deleteRecordByRecordId(mRecords.get(position).getRecordId())){
+                if(DBController.getInstance().deleteRecord(mRecords.get(position).getRecordId())){
                     mRecords.remove(position);
                     mRecordAdapter.notifyDataSetChanged();
                 }else{
                     Toast.makeText(MainActivity.this,"Delete failed!",Toast.LENGTH_SHORT).show();
                 }
                 recycler_view_list.closeMenu();
+            }
+        });
+
+
+        mRecordAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView.Adapter adapter, View v, int position) {
+                RecordPlayActivity.actionStart(MainActivity.this,mRecords.get(position).getLocalPath(),mRecords.get(position).getRecordId());
             }
         });
 

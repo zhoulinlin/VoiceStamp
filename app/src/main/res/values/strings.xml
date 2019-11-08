@@ -31,4 +31,8 @@
 
     <string name="voice_title">Voice Title</string>
 
+    <string name="tag_title">Add a Tag</string>
+
+    <string name="tag_input_hint">Type the key words for review</string>
+
 </resources>

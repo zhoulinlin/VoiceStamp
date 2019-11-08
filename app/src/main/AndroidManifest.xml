@@ -17,17 +17,17 @@
         <activity
             android:name=".recoder.RecordPlayActivity"
             android:label="@string/title_activity_record_play"
-            android:theme="@style/AppTheme.Main.Base"></activity>
+            android:theme="@style/AppTheme.Main"></activity>
         <activity
             android:name=".login.ui.login.LoginActivity"
             android:theme="@style/Theme.imgFullScreen" />
         <activity
             android:name=".mainlist.activity.MainActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.Main.Base" />
+            android:theme="@style/AppTheme.Main" />
         <activity
             android:name=".recoder.RecorderMainActivity"
-            android:theme="@style/AppTheme.Main.Base" />
+            android:theme="@style/AppTheme.Main" />
 
         <activity
             android:name=".mainlist.activity.SplashActivity"

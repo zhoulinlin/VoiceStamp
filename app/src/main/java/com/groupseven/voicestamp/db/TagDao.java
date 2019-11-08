@@ -17,14 +17,6 @@ public class TagDao extends DBHelper {
 
 	public final static String TABLE_NAME = "tags";
 
-
-	private String recordId;
-	private String tagType;
-	private String tagTitle;
-	private String tagDate;
-	private String tagContent;
-	private String extInfo;
-
 	public static final class TagColumns implements BaseColumns {
 
 		public static final String RECORD_ID = "record_id";
@@ -56,7 +48,7 @@ public class TagDao extends DBHelper {
 	}
 
 
-	public boolean insertRecord(RecTag tag){
+	public boolean insertTag(RecTag tag){
 
 		if(tag == null){
 			return false;
@@ -71,18 +63,19 @@ public class TagDao extends DBHelper {
 		data.put(TagColumns.RECORD_ID, tag.getRecordId());
 		data.put(TagColumns.EXT_INFO, tag.getExtInfo());
 
-		this.clear();
 		int rows = (int) this.insert(data);
 		return rows > 0;
 	}
 
 
-	public ArrayList<RecTag> queryRecordList(String recordId){
+	public ArrayList<RecTag> queryTagList(String recordId){
 
 		ArrayList<RecTag> recTagList = new ArrayList<RecTag>();
 		RecTag record;
-		String[] param = null;
+
+		String[] param = new String[1];
 		param[0] = recordId;
+
 		String sql = "select * from "+TABLE_NAME+" where "+ TagColumns.RECORD_ID+" = ? ";
 		Cursor cursor = this.query(sql, param);
 
@@ -116,6 +109,19 @@ public class TagDao extends DBHelper {
 		recTag.setTagType(getString(cursor, TagColumns.TAG_TYPE));
 
 		return recTag;
+	}
+
+	public boolean deleteTagsByRecordId(String recorId) {
+		int result = delete(TagColumns.RECORD_ID + "=?",
+				new String[]{recorId});
+		return result > 0;
+	}
+
+
+	public boolean deleteTagByExtInfo(String extInfo) {
+		int result = delete(TagColumns.EXT_INFO + "=?",
+				new String[]{extInfo});
+		return result > 0;
 	}
 
 

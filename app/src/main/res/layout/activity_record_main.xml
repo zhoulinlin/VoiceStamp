@@ -92,13 +92,43 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/button_play"
+    <TextView
+        android:id="@+id/tv_save_tag"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="录音回放"
-        android:visibility="invisible"/>
+        android:layout_height="wrap_content">
+
+
+    </TextView>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_tag_input"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:background="@drawable/dialog_round_bg"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        >-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/et_tag_edit"-->
+<!--            android:hint="@string/tag_input_hint"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:background="@null"-->
+<!--            android:gravity="top"-->
+<!--            android:layout_height="200dp">-->
+<!--        </EditText>-->
+<!--        <TextView-->
+<!--            android:id="@+id/tv_count_words"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="0/300 words"-->
+<!--            android:gravity="right"-->
+<!--            >-->
+<!--        </TextView>-->
+
+
+<!--    </LinearLayout>-->
+
 
 </RelativeLayout>

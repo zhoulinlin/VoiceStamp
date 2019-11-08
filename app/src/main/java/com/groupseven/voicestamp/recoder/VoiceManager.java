@@ -275,16 +275,25 @@ public class VoiceManager {
     private void updateMicStatus() {
         if (mMediaRecorder != null) {
             double ratio = (double) mMediaRecorder.getMaxAmplitude() / BASE;
-            Log.d("VoiceManager222", "分贝值：" + ratio);
             double db = 0;// 分贝
             if (ratio > 1)
                 db = 20 * Math.log10(ratio);
-            Log.d("VoiceManager", "分贝值：" + db);
             waveView.putValue((int)ratio);
             mHandler.postDelayed(mUpdateMicStatusTimer, SPACE);
         }
     }
 
+
+    public String getTime(){
+
+        String time = null;
+        if(mTVRecTime != null){
+
+            time= mTVRecTime.getText().toString();
+        }
+        return time;
+
+    }
     public void sessionRecordEx(boolean init, int resTimeTextId) {
         if (!FileUtils.isSDCardAvailable()) return;
         if (init) {

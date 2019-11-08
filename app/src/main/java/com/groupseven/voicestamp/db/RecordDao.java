@@ -109,6 +109,7 @@ public class RecordDao extends DBHelper {
 	public boolean deleteRecordByRecordId(String recorId) {
 		int result = delete(RecordColumns.RECORD_ID + "=?",
 				new String[]{recorId});
+
 		return result > 0;
 	}
 

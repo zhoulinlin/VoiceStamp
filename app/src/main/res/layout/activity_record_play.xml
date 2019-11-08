@@ -7,29 +7,42 @@
     android:background="@android:color/black"
     tools:context=".recoder.RecordPlayActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Voice"
+        >
+    </TextView>
+
 
     <ImageView
+        android:id="@+id/iv_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@mipmap/record_play_bg"/>
 
 
-
     <ImageView
         android:id="@+id/unit_voice_play_operate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="170dp"
         android:src="@mipmap/record_start_play" />
 
     <ImageView
         android:id="@+id/iv_pre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="178dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginRight="40dp"
         android:layout_toLeftOf="@id/unit_voice_play_operate"
         android:src="@mipmap/record_play_pre" />
 
@@ -38,21 +51,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/unit_voice_play_operate"
-        android:layout_marginTop="178dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="40dp"
         android:src="@mipmap/record_play_next" />
 
-
-
-    <SeekBar
-        android:id="@+id/unit_voice_play_progress"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:id="@+id/play_progress"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:progressDrawable="@drawable/playbar_style"
-        android:thumb="@mipmap/record_play_progress_thum_bg"
-        android:thumbOffset="0dp" />
+        >
+
+        <TextView
+            android:id="@+id/play_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@mipmap/record_play_back"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            />
+        <SeekBar
+            android:id="@+id/unit_voice_play_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:progressDrawable="@drawable/playbar_style"
+            android:thumb="@mipmap/record_play_progress_thum_bg"
+            android:thumbOffset="0dp" />
+
+        <TextView
+            android:id="@+id/play_quick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/record_play_quick"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            />
+    </RelativeLayout>
 
 
     <ImageView
@@ -62,6 +104,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="15dp"
+        android:visibility="gone"
         android:src="@mipmap/voice_stop" />
 
 
@@ -69,8 +112,8 @@
         android:id="@+id/unit_voice_play_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/unit_voice_play_progress"
-        android:layout_below="@id/unit_voice_play_progress"
+        android:layout_alignLeft="@id/play_progress"
+        android:layout_below="@id/play_progress"
         android:gravity="center"
         android:text="00:00:00"
         android:textColor="@android:color/white"
@@ -80,8 +123,8 @@
         android:id="@+id/unit_voice_play_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/unit_voice_play_progress"
-        android:layout_below="@id/unit_voice_play_progress"
+        android:layout_alignRight="@id/play_progress"
+        android:layout_below="@id/play_progress"
         android:gravity="center"
         android:text="00:00:00"
         android:textColor="@android:color/white"
@@ -92,7 +135,7 @@
         android:id="@+id/recycler_view_list"
         android:divider="@null"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/iv_panel"
         android:layout_height="wrap_content" />
 
 

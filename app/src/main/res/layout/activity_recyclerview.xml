@@ -6,7 +6,8 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_head_img"
-        android:id="@+id/toolbar_img_title"/>
+        android:id="@+id/toolbar_img_title"
+        />
 
     <com.groupseven.voicestamp.mainlist.views.SlideRecyclerView
         android:id="@+id/recycler_view_list"

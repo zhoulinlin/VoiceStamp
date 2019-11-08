@@ -31,6 +31,14 @@ public class DBController {
 	}
 
 
+	public boolean deleteRecord(String recorId){
+
+		mTagDao.deleteTagsByRecordId(recorId);
+
+		return mRecordDao.deleteRecordByRecordId(recorId);
+	}
+
+
 	public RecordDao getRecordDao() {
 		return mRecordDao;
 	}
