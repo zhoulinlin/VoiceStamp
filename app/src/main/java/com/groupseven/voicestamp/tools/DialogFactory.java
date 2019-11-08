@@ -793,7 +793,9 @@ public class DialogFactory {
         msgDialog.setTitle(context.getResources().getString(title));
         msgDialog.setTitleEnable(true);
         msgDialog.setTwoBtnStyle();
-        msgDialog.setMessage(context.getResources().getString(message));
+        if(message !=0 ){
+            msgDialog.setMessage(context.getResources().getString(message));
+        }
         msgDialog.setBtn2ClickListener(surelistener);
         if (!TextUtils.isEmpty(sureString)) {
             msgDialog.setBtn2Text(sureString);

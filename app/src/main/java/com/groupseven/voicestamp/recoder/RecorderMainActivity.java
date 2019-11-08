@@ -49,11 +49,12 @@ public class RecorderMainActivity extends AppCompatActivity {
             public void recFinish(final String path,final String duration) {
                 Log.d("RecorderMainActivity","path:" + mRecPath);
 
-                dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, R.string.action_sign_in, "Save", new View.OnClickListener() {
+                dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, 0, "Save", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         saveRecord(path,duration,dialog.getEditText().getText().toString());
                         MainActivity.actionStart(RecorderMainActivity.this);
+                        finish();
                     }
                 },R.string.voice_title,CommonTools.getDate());
             }

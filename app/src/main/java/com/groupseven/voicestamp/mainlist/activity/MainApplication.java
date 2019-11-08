@@ -12,6 +12,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppGlobal.getInstance().setApplicationContext(this);
+        //chrome://inspect/#devices
         Stetho.initializeWithDefaults(this);
     }
 }

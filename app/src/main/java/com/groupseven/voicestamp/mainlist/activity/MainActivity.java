@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,8 +52,13 @@ public class MainActivity extends AppCompatActivity {
         mRecordAdapter.setOnDeleteClickListener(new RecordAdapter.OnDeleteClickLister() {
             @Override
             public void onDeleteClick(View view, int position) {
-                mRecords.remove(position);
-                mRecordAdapter.notifyDataSetChanged();
+
+                if(DBController.getInstance().getRecordDao().deleteRecordByRecordId(mRecords.get(position).getRecordId())){
+                    mRecords.remove(position);
+                    mRecordAdapter.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(MainActivity.this,"Delete failed!",Toast.LENGTH_SHORT).show();
+                }
                 recycler_view_list.closeMenu();
             }
         });
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 RecorderMainActivity.actionStart(MainActivity.this);
+                finish();
             }
         });
     }

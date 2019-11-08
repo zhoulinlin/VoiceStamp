@@ -100,6 +100,18 @@ public class RecordDao extends DBHelper {
 		return recordList;
 	}
 
+//
+//	public boolean deleteRecordByRecordId(String recorId) {
+//		return delete(RecordColumns.RECORD_ID + "=?",
+//				recorId,false);
+//	}
+
+	public boolean deleteRecordByRecordId(String recorId) {
+		int result = delete(RecordColumns.RECORD_ID + "=?",
+				new String[]{recorId});
+		return result > 0;
+	}
+
 
 	public Record getRecordBeanFromCursor(Cursor cursor) {
 		Record record = new Record();
