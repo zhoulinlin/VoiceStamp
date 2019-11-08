@@ -776,7 +776,7 @@ public class DialogFactory {
      * @return
      */
     public static MessageDialog editDiaglog(Context context, int message, String sureString,
-                                            OnClickListener surelistener, int title, int editTextContnt) {
+                                            OnClickListener surelistener, int title, String editTextContnt) {
         if (null == context) {
             return null;
         }
@@ -789,7 +789,7 @@ public class DialogFactory {
         MessageDialog msgDialog = new MessageDialog(context);
         msgDialog.setEditTextVisible(true);
         msgDialog.setEditPassword(false);
-        msgDialog.getEditText().setText(context.getResources().getString(editTextContnt));
+        msgDialog.getEditText().setText(editTextContnt);
         msgDialog.setTitle(context.getResources().getString(title));
         msgDialog.setTitleEnable(true);
         msgDialog.setTwoBtnStyle();

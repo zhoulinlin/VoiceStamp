@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 
 import com.groupseven.voicestamp.db.bean.Record;
@@ -38,7 +39,7 @@ public class RecordDao extends DBHelper {
 			RecordColumns.LOCAL_PATH
 	};
 
-    public final static String[] FIELD_TYPES = {"TEXT","TEXT","TEXT","TEXT","TEXT","TEXT","TEXT","TEXT",};
+    public final static String[] FIELD_TYPES = {"TEXT","TEXT","TEXT","TEXT","TEXT","TEXT"};
     
 	public RecordDao(Context context) {
 		super(context, TABLE_NAME, FIELD_NAMES, FIELD_TYPES);
@@ -65,10 +66,8 @@ public class RecordDao extends DBHelper {
 		data.put(RecordColumns.RECORD_ID, reocrd.getRecordId());
 		data.put(RecordColumns.LOCAL_PATH, reocrd.getLocalPath());
 
-		this.clear();
 		int rows = (int) this.insert(data);
 		return rows > 0;
-
 	}
 
 
@@ -76,7 +75,7 @@ public class RecordDao extends DBHelper {
 
 		ArrayList<Record> recordList = new ArrayList<Record>();
 		Record record;
-		String[] param = null;
+		String[] param = new String[1];
 		param[0] = userId;
 		String sql = "select * from "+TABLE_NAME+" where "+ RecordColumns.USER_ID+" = ? ";
 		Cursor cursor = this.query(sql, param);
@@ -95,6 +94,8 @@ public class RecordDao extends DBHelper {
 		} finally {
 			cursor.close();
 		}
+
+		Log.d(TAG,"queryRecordList size:"+ recordList.size());
 
 		return recordList;
 	}

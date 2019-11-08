@@ -12,7 +12,7 @@ public class DBHelper extends BaseDbHelper {
 	
 	private final static int DATABASE_VERSION = 1;
 	
-	private final static String DATABASE_NAME = "paim_push_service.db";
+	private final static String DATABASE_NAME = "voice_stamp.db";
 	
 	private static Set<Class<?>> childrenClasses = new HashSet<Class<?>>();
 	

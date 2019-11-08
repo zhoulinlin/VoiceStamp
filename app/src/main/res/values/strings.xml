@@ -28,4 +28,7 @@
     <string name="cancel">cancel</string>
     <string name="sure">Yes</string>
     <string name="title_activity_record_play">RecordPlayActivity</string>
+
+    <string name="voice_title">Voice Title</string>
+
 </resources>

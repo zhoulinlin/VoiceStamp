@@ -9,17 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/**
- * RecyclerView adapter基类
- * <p>
- * 封装了数据集合以及ItemView的点击事件回调,同时暴露 {@link #onBindData(RecyclerViewHolder, Object, int)}
- * 用于数据与view绑定
- *
- * @param <T> A data bean class that will be used by the adapter.
- *            <p>
- *            Created by DavidChen on 2018/5/30.
- */
-
 abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> implements View.OnClickListener {
 
     private Context mContext;
@@ -32,6 +21,10 @@ abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
         this.mContext = context;
         this.mData = data;
         this.mLayoutId = layoutId;
+    }
+
+    public void setData(List<T> data){
+        this.mData = data;
     }
 
     @Override

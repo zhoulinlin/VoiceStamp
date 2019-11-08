@@ -24,8 +24,7 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 	private static final String TAG = BaseDbHelper.class.getSimpleName();
 	
 	private static final String mPATTERN = "HH:mm  yyyy/MM/dd";
-	private static SimpleDateFormat mFORMATTER = new SimpleDateFormat(mPATTERN);
-	
+
 	private String[] FIELD_NAMES;
 	private String[] FIELD_TYPES;
 	private String TABLE_NAME;
@@ -57,12 +56,8 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		TABLE_NAME = tableName;
 		AUTHORITY = context.getApplicationInfo().packageName;
 		CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_NAME);
-		addContentObserver();
 	}
 
-	public static String getCurrentTime() {
-		return mFORMATTER.format(new Date());
-	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -297,13 +292,6 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	/**
-	 * 
-	 * @param data
-	 * @return
-	 * @author LiJinHua
-	 * @modify 2014-6-1 上午8:43:38
-	 */
 	protected ContentValues genContentValues(HashMap<String, Object> data){
 		ContentValuesBuilder cv = new ContentValuesBuilder();
 		for(String key : FIELD_NAMES){
@@ -312,13 +300,6 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		return cv.getContentValues();
 	}
 	
-	/**
-	 * 从Cursor中返回一个二维数据的实例对象
-	 * @param cursor
-	 * @return
-	 * @author LiJinHua
-	 * @modify 2014-6-1 上午8:43:31
-	 */
 	protected HashMap<String, Object> getDataFromCursor(Cursor cursor) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		int id = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID));
@@ -331,24 +312,10 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		return  hashMap;
 	}
 	
-	/**
-	 * 插入一条记录
-	 * @param data
-	 * @return
-	 * @author LiJinHua
-	 * @modify 2014-6-1 上午9:12:16
-	 */
 	public long insert(HashMap<String, Object> data) {
 		return insert(data, true);
 	}
 	
-	/**
-	 * 插入一条记录
-	 * @param data
-	 * @return
-	 * @author LiJinHua
-	 * @modify 2014-6-1 上午9:12:16
-	 */
 	public long insert(HashMap<String, Object> data, boolean isNotifyDBChange) {
 		SQLiteDatabase db = null;
 		long keyId;
@@ -369,13 +336,6 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		return keyId;
 	}
 	
-	/**
-	 * 插入多条记录
-	 * @param listdata
-	 * @return
-	 * @author LiJinHua
-	 * @modify 2014-6-1 上午9:12:31
-	 */
 	public long insert(List<HashMap<String, Object>> listdata) {
 		if(listdata == null){
 			return 0;
@@ -433,14 +393,11 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 //			}
 		}
 		if(isNotifyDBChange){
-			notifyDBChange();
+//			notifyDBChange();
 		}
 		return rows;
 	}
 	
-	/**
-	 * 替换一条记录
-	 */
 	public long replace(HashMap<String, Object> data, String keyColumn) {
 		SQLiteDatabase db = null;
 		long rows = 0;
@@ -460,7 +417,7 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 //			}
 //			db.endTransaction();
 		}
-		notifyDBChange();
+//		notifyDBChange();
 		return rows;
 	}
 	
@@ -491,7 +448,7 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 //				db.close();
 //			}
 		}
-		notifyDBChange();
+//		notifyDBChange();
 		return keyCount;
 	}
 	
@@ -530,8 +487,6 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 			}
 			cursor = db.rawQuery(sql, args);
 		} catch (Exception e) {
-//			if (db != null)
-////				db.close();
 			return null;
 		}
 		mDb = db;
@@ -549,28 +504,7 @@ public class BaseDbHelper extends SQLiteOpenHelper {
 		return list;
 	}
 	
-	private ContentObserver observerDB = new ContentObserver(new Handler()) {
-		@Override
-		public void onChange(boolean selfChange) {
-			dispatchDbListener();
-			super.onChange(selfChange);
-		}
-	};
-	
-	/**
-	 * 添加DB观察者
-	 */
-    private void addContentObserver(){
-    	context.getContentResolver().registerContentObserver(CONTENT_URI, true, observerDB);
-    }
-    
-    private void removeContentObserver(){
-    	context.getContentResolver().unregisterContentObserver(observerDB);
-    }
-    /**
-     * 通知DB改变
-     */
 	public  void notifyDBChange() {
-	        context.getContentResolver().notifyChange(CONTENT_URI, null);
+//	        context.getContentResolver().notifyChange(CONTENT_URI, null);
 	}
 }

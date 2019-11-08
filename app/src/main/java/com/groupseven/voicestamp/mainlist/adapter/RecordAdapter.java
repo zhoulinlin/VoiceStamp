@@ -6,26 +6,21 @@ import android.widget.TextView;
 
 
 import com.groupseven.voicestamp.R;
-import com.groupseven.voicestamp.mainlist.bean.Inventory;
+import com.groupseven.voicestamp.db.bean.Record;
 
 import java.util.List;
 
-/**
- * 清单列表adapter
- * <p>
- * Created by DavidChen on 2018/5/30.
- */
 
-public class InventoryAdapter extends BaseRecyclerViewAdapter<Inventory> {
+public class RecordAdapter extends BaseRecyclerViewAdapter<Record> {
 
     private OnDeleteClickLister mDeleteClickListener;
 
-    public InventoryAdapter(Context context, List<Inventory> data) {
-        super(context, data, R.layout.item_inventroy);
+    public RecordAdapter(Context context, List<Record> data) {
+        super(context, data, R.layout.item_record);
     }
 
     @Override
-    protected void onBindData(RecyclerViewHolder holder, Inventory bean, int position) {
+    protected void onBindData(RecyclerViewHolder holder, Record bean, int position) {
         View view = holder.getView(R.id.btn_delete);
         view.setTag(position);
         if (!view.hasOnClickListeners()) {
@@ -38,13 +33,10 @@ public class InventoryAdapter extends BaseRecyclerViewAdapter<Inventory> {
                 }
             });
         }
-        ((TextView) holder.getView(R.id.tv_item_desc)).setText(bean.getItemDesc());
-        String quantity = bean.getQuantity() + "箱";
-        ((TextView) holder.getView(R.id.tv_quantity)).setText(quantity);
-        String detail = bean.getItemCode() + "/" + bean.getDate();
-        ((TextView) holder.getView(R.id.tv_detail)).setText(detail);
-        String volume = bean.getVolume() + "方";
-        ((TextView) holder.getView(R.id.tv_volume)).setText(volume);
+
+        ((TextView) holder.getView(R.id.tv_item_title)).setText(bean.getRecordTitle());
+        ((TextView) holder.getView(R.id.tv_item_date)).setText(bean.getRecordDate());
+        ((TextView) holder.getView(R.id.tv_item_duration)).setText(bean.getDuration());
     }
 
     public void setOnDeleteClickListener(OnDeleteClickLister listener) {

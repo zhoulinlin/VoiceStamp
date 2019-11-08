@@ -20,45 +20,35 @@
         android:paddingTop="12dp">
 
         <TextView
-            android:id="@+id/tv_quantity"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_item_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginStart="2dp"
+            android:text="Advanced Software Engineering"
             android:textColor="#FF34393F"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tv_item_desc"
+            android:id="@+id/tv_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/tv_quantity"
-            android:layout_toStartOf="@id/tv_quantity"
-            android:textColor="#FF34393F"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_item_desc"
+            android:layout_below="@id/tv_item_title"
             android:layout_marginTop="8dp"
-            android:layout_toLeftOf="@+id/tv_volume"
-            android:layout_toStartOf="@+id/tv_volume"
+            android:layout_toLeftOf="@+id/tv_item_duration"
+            android:layout_toStartOf="@+id/tv_item_duration"
+            android:text="Sep-26th-2019"
             android:textColor="#FFA3A5A8"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tv_volume"
+            android:id="@+id/tv_item_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tv_detail"
+            android:layout_alignBottom="@id/tv_item_date"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp"
+            android:text="58:48"
             android:textColor="#FFA3A5A8"
             android:textSize="12sp" />
 

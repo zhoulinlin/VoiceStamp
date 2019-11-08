@@ -44,7 +44,7 @@ public class TagDao extends DBHelper {
 			TagColumns.EXT_INFO
 	};
 
-    public final static String[] FIELD_TYPES = {"TEXT","TEXT","TEXT","TEXT","TEXT","TEXT","TEXT","TEXT",};
+    public final static String[] FIELD_TYPES = {"TEXT","TEXT","TEXT","TEXT","TEXT","TEXT"};
 
 	public TagDao(Context context) {
 		super(context, TABLE_NAME, FIELD_NAMES, FIELD_TYPES);

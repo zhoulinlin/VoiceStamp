@@ -21,24 +21,25 @@ public class SharedPreferencesUtil {
 
     public static final String LOGIN_PASSWORD = "loginPassword";
 
+    public static final String LOGIN_USERID = "loginUserId";
+
     public static final String SP_NAME = "voice_stamp";
 
 
-    /**
-     * save login info
-     * @param ctx
-     * @param loginName
-     * @return success or not
-     */
+    public static boolean saveUserId(Context ctx,String userID){
+        return setValue(ctx,SP_NAME,LOGIN_USERID,userID);
+    }
+
+
+    public static String getUserId(Context ctx){
+        return (String)getValue(ctx,SP_NAME,LOGIN_USERID,"test123");
+    }
+
     public static boolean saveLoginName(Context ctx,String loginName){
         return setValue(ctx,SP_NAME,LOGIN_NAME,loginName);
     }
 
-    /**
-     * save login info
-     * @param ctx
-     * @return loginName
-     */
+
     public static String getLoginName(Context ctx){
         return (String)getValue(ctx,SP_NAME,LOGIN_NAME,"");
     }

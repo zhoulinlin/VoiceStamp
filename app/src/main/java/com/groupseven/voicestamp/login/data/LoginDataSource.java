@@ -1,14 +1,10 @@
 package com.groupseven.voicestamp.login.data;
 
-import android.util.JsonReader;
 import android.util.Log;
 
 import com.groupseven.voicestamp.login.data.model.LoggedInUser;
-import com.groupseven.voicestamp.tools.JSONTool;
 
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,25 +22,6 @@ public class LoginDataSource {
 
     final String TAG = this.getClass().getName();
 
-
-    /**
-     * do login
-     * @param username
-     * @param password
-     * @param callback
-     *
-     * {
-     *     "code": 0,
-     *     "message": "Success",
-     *     "data": {
-     *         "uk": "hz8n37bkfio3vd7k", // User key, uniquely identifies a user
-     *         "id": "test@gmail.com", // User login identification
-     *         "id_type": "email", // User identification type
-     *         "nickname": "Nickname"
-     *     }
-     * }
-     *
-     */
     public void login(final String username,final String password,final LoginCallback callback){
 
 

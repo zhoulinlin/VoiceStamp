@@ -43,6 +43,8 @@ public class VoiceManager {
     private String filePath = "";// 录音所存放的位置  "/com.youmu.voicemanager/audio"
     private VoiceCallBack voiceCallBack;
 
+    private final String TAG = VoiceManager.class.getSimpleName();
+
     private MediaPlayer.OnCompletionListener mPlayCompetedListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
@@ -333,14 +335,14 @@ public class VoiceManager {
                 File file = getOutputVoiceFile(mRecList);
                 if (file != null && file.length() > 0) {
                     cleanFieArrayList(mRecList);
-                    //TODO 这里可以返回数据 setResult
                     voiceCallBack.voicePath(file.getAbsolutePath());
-                    voiceCallBack.recFinish();
+                    voiceCallBack.recFinish(file.getAbsolutePath(),mTVRecTime.getText().toString());
 
                 }
             }
 
         } catch (Exception e) {
+            Log.e(TAG,Log.getStackTraceString(e));
         }
     }
 

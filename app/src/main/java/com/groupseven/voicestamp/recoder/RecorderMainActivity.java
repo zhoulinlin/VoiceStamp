@@ -12,15 +12,20 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.groupseven.voicestamp.R;
+import com.groupseven.voicestamp.db.DBController;
+import com.groupseven.voicestamp.db.bean.Record;
 import com.groupseven.voicestamp.mainlist.activity.MainActivity;
+import com.groupseven.voicestamp.recoder.utils.CommonTools;
+import com.groupseven.voicestamp.tools.DialogFactory;
+import com.groupseven.voicestamp.tools.MessageDialog;
+import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
 
 
 public class RecorderMainActivity extends AppCompatActivity {
 
-//    private RelativeLayout mLayoutPlay;
-//    private Button mBtPlay;
     private VoiceManager voiceManager;
     private String mRecPath = "";
+    private MessageDialog dialog;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, RecorderMainActivity.class);
@@ -32,9 +37,6 @@ public class RecorderMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_main);
 
-//        mLayoutPlay = (RelativeLayout) findViewById(R.id.layout_play);
-//        mBtPlay = (Button) findViewById(R.id.button_play);
-
         voiceManager = new VoiceManager(RecorderMainActivity.this, "/com.groupseven.voicestamp/audio");
 
         voiceManager.setVoiceListener(new VoiceCallBack() {
@@ -44,23 +46,41 @@ public class RecorderMainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void recFinish() {
-                Log.d("recFinish","path:" + mRecPath);
-                RecordPlayActivity.actionStart(RecorderMainActivity.this,mRecPath);
-//                mBtPlay.setVisibility(View.VISIBLE);
+            public void recFinish(final String path,final String duration) {
+                Log.d("RecorderMainActivity","path:" + mRecPath);
+
+                dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, R.string.action_sign_in, "Save", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        saveRecord(path,duration,dialog.getEditText().getText().toString());
+                        MainActivity.actionStart(RecorderMainActivity.this);
+                    }
+                },R.string.voice_title,CommonTools.getDate());
             }
         });
 
         voiceManager.sessionRecord(true);
-
-//        mBtPlay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mLayoutPlay.setVisibility(View.VISIBLE);
-//                voiceManager.sessionPlay(true, mRecPath);
-//            }
-//        });
     }
 
+
+    private void saveRecord(String path,String duration,String title){
+
+        Log.d("RecorderMainActivity","saveRecord begin");
+
+        Record record = new Record();
+
+        record.setUserId(SharedPreferencesUtil.getUserId(RecorderMainActivity.this));
+        record.setRecordTitle(title);
+        record.setRecordId(CommonTools.getRandomId());
+        record.setRecordDate(CommonTools.getDate());
+        record.setLocalPath(path);
+        record.setDuration(duration);
+
+        if(!DBController.getInstance().getRecordDao().insertRecord(record)){
+            Log.e("RecorderMainActivity","saveRecord failed:" + path);
+        }else{
+            Log.i("RecorderMainActivity","saveRecord success:" + record);
+        }
+    }
 
 }
