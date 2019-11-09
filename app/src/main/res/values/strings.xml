@@ -4,10 +4,12 @@
     <string name="title_activity_login">Sign in</string>
     <!--    <string name="prompt_email">Email</string>-->
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign Up</string>
+
+    <string name="confirm_password">Confirm Password</string>
+    <string name="action_sign_in">Sign In</string>
 
     <string name="action_sign_in_or_up">Sign in   Sign Up</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short">Sign up</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -22,6 +24,7 @@
     <string name="stop_by_up">release to stop</string>
     <string name="speak_by_press">press to speak</string>
     <string name="start_record">start record</string>
+    <string name="forget_password">Forget Password?</string>
     <string name="stop_record">stop</string>
     <string name="play_fail_for_not_exist">play fail! File not exis</string>
 

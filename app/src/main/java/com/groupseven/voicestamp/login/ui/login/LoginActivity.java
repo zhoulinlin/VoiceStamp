@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -42,6 +44,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
+    private TextView tvSinup,tvForgetPassword;
+
+    private RadioButton agreeButton;
+
+    private EditText conPasswordEditText;
+
+    private final static  int SIGNIN_MODE = 1;
+
+    private final static int REGISTER_MODE = 2;
+
+    private TextView registerBtn;
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -59,14 +72,37 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        final TextView loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        final RadioButton agreeButton = findViewById(R.id.rbtn_agreement);
+        agreeButton = findViewById(R.id.rbtn_agreement);
+
+        conPasswordEditText = findViewById(R.id.password_comfirm);
+
+        tvForgetPassword = findViewById(R.id.tv_forget_password);
+
+        registerBtn = findViewById(R.id.register);
 
         usernameEditText.setText("test8@gmail.com");
         passwordEditText.setText("123456");
 
+        tvSinup = findViewById(R.id.select_action);
+        tvSinup.setTag(SIGNIN_MODE);
+
+        showSigninView();
+
+        tvSinup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((int)view.getTag() == SIGNIN_MODE){
+                    showRegisterView();
+                    view.setTag(REGISTER_MODE);
+                }else if((int)view.getTag() == REGISTER_MODE){
+                    showSigninView();
+                    view.setTag(SIGNIN_MODE);
+                }
+            }
+        });
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -141,8 +177,33 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                    loginViewModel.login(usernameEditText.getText().toString(),
+                            passwordEditText.getText().toString());
+            }
+        });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String password = passwordEditText.getText().toString();
+                String conPass = conPasswordEditText.getText().toString();
+
+                if(!TextUtils.isEmpty(password) && !password.equals(conPass)){
+                    Log.d("LoginActivity","password:" +password +"   conPass:" +conPass);
+                    Toast.makeText(LoginActivity.this,"Two passwords are inconsistent",Toast.LENGTH_SHORT).show();
+                }else{
+
+                    if(!agreeButton.isChecked()){
+                        Toast.makeText(LoginActivity.this,"Please read the agreement",Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        loadingProgressBar.setVisibility(View.VISIBLE);
+                        loginViewModel.register(usernameEditText.getText().toString(),
+                                passwordEditText.getText().toString());
+                    }
+
+                }
             }
         });
 
@@ -164,12 +225,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if(result instanceof Result.Success){
                                     String data = (String) ((Result.Success) result).getData();
-
-
                                     Spanned text = Html.fromHtml(data.toString());
-
-                                    DialogFactory.chooseDialog(LoginActivity.this, "Agreement", text, "Agree","Disagree",null,
-                                            null, true);
+                                    DialogFactory.chooseDialog(LoginActivity.this, "Agreement", text, "Agree", "Disagree", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    agreeButton.setChecked(true);
+                                                }
+                                            },
+                                            new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    agreeButton.setChecked(false);
+                                                }
+                                            }, true);
                                 }else{
                                     Toast.makeText(LoginActivity.this,"Get agreement failed!",Toast.LENGTH_SHORT).show();
                                 }
@@ -181,6 +249,26 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+
+    private void showSigninView(){
+        registerBtn.setVisibility(View.GONE);
+        findViewById(R.id.login).setVisibility(View.VISIBLE);
+        conPasswordEditText.setVisibility(View.GONE);
+        tvSinup.setBackgroundResource(R.mipmap.login_bg_sighin);
+        agreeButton.setVisibility(View.GONE);
+        tvForgetPassword.setVisibility(View.VISIBLE);
+    }
+
+
+    private void showRegisterView(){
+        registerBtn.setVisibility(View.VISIBLE);
+        findViewById(R.id.login).setVisibility(View.GONE);
+        conPasswordEditText.setVisibility(View.VISIBLE);
+        tvSinup.setBackgroundResource(R.mipmap.login_bg_sighup);
+        agreeButton.setVisibility(View.VISIBLE);
+        tvForgetPassword.setVisibility(View.GONE);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

@@ -103,6 +103,85 @@ public class LoginDataSource {
         }
     }
 
+
+    public void register(final String username, final String password, final LoginCallback callback) {
+
+        if (callback == null) {
+            return;
+        }
+
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        OkHttpClient client = new OkHttpClient();
+
+                        JSONObject requestBody = new JSONObject();
+
+                        requestBody.put("id", username);
+                        requestBody.put("password", password);
+                        RequestBody body = RequestBody.create(requestBody.toString(), JSON);
+
+                        String URL = "https://vs.hopeness.net/api/v1/register";
+
+                        Response response = null;
+
+                        Log.e(TAG, "<<<<requestBody:" + requestBody.toString());
+
+                        Log.e(TAG, "<<<<url:" + URL);
+                        final Request request = new Request.Builder()
+                                .url(URL)
+                                .post(body).build();
+
+                        Call call = client.newCall(request);
+                        response = call.execute();
+
+                        if (response != null) {
+                            String bodyStr = response.body().string();
+
+                            Log.e(TAG, "<<<<bodyStr:" + bodyStr);
+
+                            JSONObject json = new JSONObject(bodyStr);
+                            Log.e(TAG, "<<<<response:" + json.toString());
+                            int code = json.optInt("code");
+                            String errMessage = json.optString("message");
+
+                            if (code == 0) {
+                                String data = json.optString("data");
+                                JSONObject dataoj = new JSONObject(data);
+                                String uk = dataoj.optString("uk");
+                                String id = dataoj.optString("id");
+                                String idType = dataoj.optString("id_type");
+                                String nickname = dataoj.optString("nickname");
+
+                                LoggedInUser fakeUser = new LoggedInUser(id, nickname);
+                                fakeUser.setIdType(idType);
+                                fakeUser.setUniqueKey(uk);
+                                callback.onHttpFinish(new Result.Success<>(fakeUser));
+
+                            } else {
+                                Log.e(TAG, "<<<<register failed msg:" + errMessage);
+                                callback.onHttpFinish(new Result.Error(code));
+                            }
+
+                            Log.e(TAG, "<<<<e=" + response.toString());
+                        }
+                    } catch (Exception e) {
+                        callback.onHttpFinish(new Result.Error(e));
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+
+        } catch (Exception e) {
+            Log.e(TAG, "<<<<e=" + Log.getStackTraceString(e));
+        }
+    }
+
+
+
     public void logout() {
         try {
             new Thread(new Runnable() {
@@ -159,12 +238,14 @@ public class LoginDataSource {
                             }
                         }
                     } catch (Exception e) {
+                        callback.onHttpFinish(new Result.Error(e));
                         Log.e(TAG, "<<<<logout Exception:" + Log.getStackTraceString(e));
                     }
                 }
             }).start();
 
         } catch (Exception e) {
+            callback.onHttpFinish(new Result.Error(e));
             Log.e(TAG, "<<<<logout e=" + Log.getStackTraceString(e));
         }
     }

@@ -53,6 +53,10 @@ public class LoginRepository {
         dataSource.login(username, password,callback);
     }
 
+    public void register(String username, String password,LoginCallback callback) {
+        dataSource.register(username, password,callback);
+    }
+
     public void getAgreement(LoginCallback callback) {
 
         dataSource.getAgreement(callback);

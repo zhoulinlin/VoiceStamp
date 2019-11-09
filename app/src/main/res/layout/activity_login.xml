@@ -14,7 +14,7 @@
         android:scaleType="fitXY"
         android:src="@mipmap/top_bg_signin"/>
 
-    <Button
+    <TextView
         android:id="@+id/select_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dip"
+        android:layout_marginTop="25dip"
         android:layout_marginRight="160dp"
         android:layout_below="@+id/select_action"
         android:layout_centerHorizontal="true"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/username"
         android:layout_marginRight="160dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:layout_centerHorizontal="true"
@@ -53,9 +53,25 @@
         android:selectAllOnFocus="true"
          />
 
+    <EditText
+        android:id="@+id/password_comfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_marginRight="160dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/confirm_password"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:layout_centerHorizontal="true"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:drawableRight="@mipmap/login_password_icon"
+        android:selectAllOnFocus="true"
+        />
+
     <RadioButton
         android:id="@+id/rbtn_agreement"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/password_comfirm"
         android:layout_width="wrap_content"
         android:singleLine="true"
         android:layout_marginTop="20dp"
@@ -66,19 +82,34 @@
         >
     </RadioButton>
 
-    <Button
+    <TextView
         android:id="@+id/login"
-        android:layout_width="180dp"
-        android:layout_marginTop="50dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rbtn_agreement"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/login_btn_bg"
-        android:textColor="@android:color/black"
+        android:background="@mipmap/btn_short"
+        android:textColor="@android:color/white"
         android:gravity="center"
         android:textSize="16sp"
+        android:visibility="gone"
         android:text="@string/action_sign_in"
        />
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rbtn_agreement"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/btn_short"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:text="@string/action_sign_in_short"
+        />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -87,4 +118,16 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
     />
+
+    <TextView
+        android:id="@+id/tv_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/login"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/darker_gray"
+        android:text="@string/forget_password"
+
+        />
 </RelativeLayout>

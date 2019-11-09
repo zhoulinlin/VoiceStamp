@@ -56,6 +56,29 @@ public class LoginViewModel extends ViewModel {
     }
 
 
+    public void register(String username, String password) {
+
+        // can be launched in a separate asynchronous job
+        LoginCallback callback = new LoginCallback() {
+            @Override
+            public void onHttpFinish(Result result) {
+                if (result instanceof Result.Success) {
+                    LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+                    loginResult.postValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+                    loginRepository.setLoggedInUser(data);
+                } else if(result instanceof Result.Error){
+//                    Integer errorMsg = ((Result.Error) result).getErrorMsg();
+//                    loginResult.postValue(new LoginResult(errorMsg));
+                    loginResult.postValue(new LoginResult(R.string.login_failed));
+                }else{
+                    loginResult.postValue(new LoginResult(R.string.login_failed));
+                }
+            }
+        };
+
+        loginRepository.register(username, password,callback);
+    }
+
     public void logout() {
         loginRepository.logout();
     }
