@@ -119,7 +119,7 @@ public class LoginDataSource {
 
                         JSONObject requestBody = new JSONObject();
 
-                        requestBody.put("id", username);
+                        requestBody.put("email", username);
                         requestBody.put("password", password);
                         RequestBody body = RequestBody.create(requestBody.toString(), JSON);
 
