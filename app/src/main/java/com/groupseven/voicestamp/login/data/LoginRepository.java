@@ -1,6 +1,7 @@
 package com.groupseven.voicestamp.login.data;
 
 import com.groupseven.voicestamp.login.data.model.LoggedInUser;
+import com.groupseven.voicestamp.tools.AppGlobal;
 import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
 
 /**
@@ -27,16 +28,25 @@ public class LoginRepository {
     }
 
     public boolean isLoggedIn() {
-        return user != null;
+        return getUser() != null;
+    }
+
+    public LoggedInUser getUser() {
+        if(user == null){
+            user = SharedPreferencesUtil.getLoggedInUser(AppGlobal.getInstance().getApplicationContext());
+        }
+        return user;
     }
 
     public void logout() {
         user = null;
         dataSource.logout();
+        SharedPreferencesUtil.clearLoggedInUser(AppGlobal.getInstance().getApplicationContext());
     }
 
     public void setLoggedInUser(LoggedInUser user) {
         this.user = user;
+        SharedPreferencesUtil.saveLoggedInUser(AppGlobal.getInstance().getApplicationContext(),user);
     }
 
     public void login(String username, String password,LoginCallback callback) {

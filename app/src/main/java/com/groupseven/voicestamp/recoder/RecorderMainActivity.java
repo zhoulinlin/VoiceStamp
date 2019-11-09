@@ -16,6 +16,8 @@ import com.groupseven.voicestamp.R;
 import com.groupseven.voicestamp.db.DBController;
 import com.groupseven.voicestamp.db.bean.RecTag;
 import com.groupseven.voicestamp.db.bean.Record;
+import com.groupseven.voicestamp.login.data.LoginDataSource;
+import com.groupseven.voicestamp.login.data.LoginRepository;
 import com.groupseven.voicestamp.mainlist.activity.BaseActivity;
 import com.groupseven.voicestamp.mainlist.activity.MainActivity;
 import com.groupseven.voicestamp.recoder.utils.CommonTools;
@@ -118,7 +120,7 @@ public class RecorderMainActivity extends BaseActivity {
 
         Record record = new Record();
 
-        record.setUserId(SharedPreferencesUtil.getUserId(RecorderMainActivity.this));
+        record.setUserId(LoginRepository.getInstance(new LoginDataSource()).getUser().getUniqueKey());
         record.setRecordTitle(title);
         record.setRecordId(recordId);
         record.setRecordDate(CommonTools.getDate());

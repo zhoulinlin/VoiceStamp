@@ -36,13 +36,16 @@ public class Result<T> {
     // Error sub-class
     public final static class Error extends Result {
         private Exception error;
-        private String errorMsg;
+        private Integer errorMsg;
 
+        public Integer getErrorMsg() {
+            return this.errorMsg;
+        }
         public Error(Exception error) {
             this.error = error;
         }
 
-        public Error(String error) {
+        public Error(Integer error) {
             this.errorMsg = error;
         }
 

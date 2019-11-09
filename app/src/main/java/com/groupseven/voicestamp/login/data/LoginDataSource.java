@@ -15,14 +15,18 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
 
     final String TAG = this.getClass().getName();
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     public void login(final String username,final String password,final LoginCallback callback){
+
 
 
         if(callback == null){
@@ -35,14 +39,20 @@ public class LoginDataSource {
                 public void run() {
                     try {
                         OkHttpClient client = new OkHttpClient();
-                        RequestBody body = new FormBody.Builder()
-                                .add("username",username)
-                                .add("password",password).build();
+
+                        JSONObject requestBody = new JSONObject();
+
+                        requestBody.put("id",username);
+                        requestBody.put("password",password);
+                        RequestBody body = RequestBody.create(requestBody.toString(), JSON);
+
                         String URL= "https://vs.hopeness.net/api/v1/login";
 
 //                        https://vscdn.hopeness.net/agreement.json
 
                         Response response = null;
+
+                        Log.e(TAG,"<<<<requestBody:"+requestBody.toString());
 
                         Log.e(TAG,"<<<<url:"+URL);
                         final Request request = new Request.Builder()
@@ -53,12 +63,16 @@ public class LoginDataSource {
                         response = call.execute();
 
                         if(response!= null){
-                            Log.e(TAG,"<<<<response:"+ response.toString());
-                            JSONObject json = new JSONObject(response.body().toString());
+                            String bodyStr = response.body().string();
+
+                            Log.e(TAG,"<<<<bodyStr:"+ bodyStr);
+
+                            JSONObject json = new JSONObject(bodyStr);
+                            Log.e(TAG,"<<<<response:"+ json.toString());
                             int code = json.optInt("code");
                             String errMessage = json.optString("message");
 
-                            if(code == 1){
+                            if(code == 0){
                                 String data = json.optString("data");
                                 JSONObject dataoj = new JSONObject(data);
                                 String uk = dataoj.optString("uk");
@@ -72,7 +86,8 @@ public class LoginDataSource {
                                 callback.onHttpFinish(new Result.Success<>(fakeUser));
 
                             }else{
-                                callback.onHttpFinish(new Result.Error(errMessage));
+                                Log.e(TAG,"<<<<login failed msg:"+ errMessage);
+                                callback.onHttpFinish(new Result.Error(code));
                             }
 
                             Log.e(TAG,"<<<<e="+response.toString());

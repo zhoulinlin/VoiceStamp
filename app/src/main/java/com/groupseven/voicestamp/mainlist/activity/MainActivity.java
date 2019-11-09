@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.groupseven.voicestamp.R;
 import com.groupseven.voicestamp.db.DBController;
 import com.groupseven.voicestamp.db.bean.Record;
+import com.groupseven.voicestamp.login.data.LoginDataSource;
+import com.groupseven.voicestamp.login.data.LoginRepository;
 import com.groupseven.voicestamp.mainlist.adapter.BaseRecyclerViewAdapter;
 import com.groupseven.voicestamp.mainlist.adapter.RecordAdapter;
 import com.groupseven.voicestamp.mainlist.views.SlideRecyclerView;
@@ -54,7 +56,7 @@ public class MainActivity extends BaseActivity {
         recycler_view_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         startBtn = findViewById(R.id.record_btn);
 
-        mRecords = DBController.getInstance().getRecordDao().queryRecordList(SharedPreferencesUtil.getUserId(this));
+        mRecords = DBController.getInstance().getRecordDao().queryRecordList();
 
         mRecordAdapter = new RecordAdapter(this, mRecords);
         recycler_view_list.setAdapter(mRecordAdapter);
@@ -93,7 +95,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mRecords = DBController.getInstance().getRecordDao().queryRecordList(SharedPreferencesUtil.getUserId(this));
+        mRecords = DBController.getInstance().getRecordDao().queryRecordList();
         mRecordAdapter.setData(mRecords);
         mRecordAdapter.notifyDataSetChanged();
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.groupseven.voicestamp.login.data.model.LoggedInUser;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,47 +21,53 @@ public class SharedPreferencesUtil {
 
     public static final String LOGIN_NAME = "loginName";
 
-    public static final String LOGIN_PASSWORD = "loginPassword";
+    public static final String LOGIN_ID_TYPE = "login_id_type";
 
     public static final String LOGIN_USERID = "loginUserId";
 
+    public static final String LOGIN_UNIQUE = "loginUnique";
+
     public static final String SP_NAME = "voice_stamp";
-
-
-    public static boolean saveUserId(Context ctx,String userID){
-        return setValue(ctx,SP_NAME,LOGIN_USERID,userID);
-    }
-
-
-    public static String getUserId(Context ctx){
-        return (String)getValue(ctx,SP_NAME,LOGIN_USERID,"test123");
-    }
-
-    public static boolean saveLoginName(Context ctx,String loginName){
-        return setValue(ctx,SP_NAME,LOGIN_NAME,loginName);
-    }
-
-
-    public static String getLoginName(Context ctx){
-        return (String)getValue(ctx,SP_NAME,LOGIN_NAME,"");
-    }
-
-
-    public static boolean saveLoginPassword(Context ctx,String loginName){
-        return setValue(ctx,SP_NAME,LOGIN_PASSWORD,loginName);
-    }
-
-
-    public static String getLoginPassword(Context ctx){
-        return (String)getValue(ctx,SP_NAME,LOGIN_PASSWORD,"");
-    }
 
     public static boolean isLogin(Context ctx){
 
-//        return !TextUtils.isEmpty(getLoginPassword(ctx));
-
-        return true;
+        return getLoggedInUser(ctx) != null;
     }
+
+    public static boolean saveLoggedInUser(Context ctx,LoggedInUser user){
+
+        return setValue(ctx,SP_NAME,LOGIN_USERID,user.getUserId())
+                && setValue(ctx,SP_NAME,LOGIN_NAME,user.getDisplayName())
+                && setValue(ctx,SP_NAME,LOGIN_UNIQUE,user.getUniqueKey())
+                && setValue(ctx,SP_NAME,LOGIN_ID_TYPE,user.getIdType());
+
+    }
+
+    public static LoggedInUser getLoggedInUser(Context ctx){
+
+        String userId = (String)getValue(ctx,SP_NAME,LOGIN_USERID,"");
+
+        if(TextUtils.isEmpty(userId)){
+            return null;
+        }
+        String displayName = (String)getValue(ctx,SP_NAME,LOGIN_USERID,"");
+        LoggedInUser user = new LoggedInUser(userId,displayName);
+        user.setUniqueKey((String)getValue(ctx,SP_NAME,LOGIN_UNIQUE,""));
+        user.setIdType((String)getValue(ctx,SP_NAME,LOGIN_ID_TYPE,""));
+
+        return user;
+    }
+
+
+    public static boolean clearLoggedInUser(Context ctx){
+
+        return setValue(ctx,SP_NAME,LOGIN_USERID,"")
+                && setValue(ctx,SP_NAME,LOGIN_NAME,"")
+                && setValue(ctx,SP_NAME,LOGIN_UNIQUE,"")
+                && setValue(ctx,SP_NAME,LOGIN_ID_TYPE,"");
+    }
+
+
 
 
     public static boolean setValue(Context ctx, String spName, String key, Object value) {

@@ -115,7 +115,7 @@ public class RecordPlayActivity extends BaseActivity {
     private void playNeighbor(boolean isNext){
 
         if(mRecords == null || mRecords.size() == 0){
-            mRecords = DBController.getInstance().getRecordDao().queryRecordList(SharedPreferencesUtil.getUserId(RecordPlayActivity.this));
+            mRecords = DBController.getInstance().getRecordDao().queryRecordList();
         }
 
         if(mRecords == null || mRecords.size() == 0){

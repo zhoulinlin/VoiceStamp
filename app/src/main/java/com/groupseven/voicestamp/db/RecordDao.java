@@ -9,6 +9,8 @@ import android.util.Log;
 
 
 import com.groupseven.voicestamp.db.bean.Record;
+import com.groupseven.voicestamp.login.data.LoginDataSource;
+import com.groupseven.voicestamp.login.data.LoginRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,12 +73,12 @@ public class RecordDao extends DBHelper {
 	}
 
 
-	public ArrayList<Record> queryRecordList(String userId){
+	public ArrayList<Record> queryRecordList(){
 
 		ArrayList<Record> recordList = new ArrayList<Record>();
 		Record record;
 		String[] param = new String[1];
-		param[0] = userId;
+		param[0] = getCurUserUK();
 		String sql = "select * from "+TABLE_NAME+" where "+ RecordColumns.USER_ID+" = ? ";
 		Cursor cursor = this.query(sql, param);
 
@@ -98,6 +100,10 @@ public class RecordDao extends DBHelper {
 		Log.d(TAG,"queryRecordList size:"+ recordList.size());
 
 		return recordList;
+	}
+
+	public String getCurUserUK(){
+		return LoginRepository.getInstance(new LoginDataSource()).getUser().getUniqueKey();
 	}
 
 

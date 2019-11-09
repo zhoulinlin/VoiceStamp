@@ -60,6 +60,10 @@ public class LoginActivity extends AppCompatActivity {
 
         final RadioButton agreeButton = findViewById(R.id.rbtn_agreement);
 
+        usernameEditText.setText("test8@gmail.com");
+        passwordEditText.setText("123456");
+
+
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -91,10 +95,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                MainActivity.actionStart(LoginActivity.this);
+//                MainActivity.actionStart(LoginActivity.this);
 
                 //Complete and destroy login activity once successful
-                finish();
+//                finish();
             }
         });
 
@@ -153,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         MainActivity.actionStart(LoginActivity.this);
+        finish();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
