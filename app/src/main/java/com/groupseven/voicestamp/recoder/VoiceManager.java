@@ -231,6 +231,24 @@ public class VoiceManager {
         }
     }
 
+    public void stopPlaying(){
+        try {
+            mHandler.removeMessages(CommonDefine.MSG_TIME_INTERVAL);
+            mDeviceState = CommonDefine.MEDIA_STATE_PLAY_STOP;
+
+            mIVPlaOperate.setImageResource(R.mipmap.record_start_play);
+            mTVPlaCurrent.setText("00:00:00");
+
+            stopMedia(mMediaPlayer, true);
+            mMediaPlayer = null;
+
+        } catch (Exception e) {
+
+        } finally {
+//                        mVPlaRoot.setVisibility(View.GONE);
+        }
+    }
+
     public void sessionRecord(boolean init) {
         if (!FileUtils.isSDCardAvailable()) return;
         if (init) {
@@ -355,12 +373,7 @@ public class VoiceManager {
         }
     }
 
-    /**
-     * 录音播放
-     *
-     * @param init
-     * @param path
-     */
+
     public void sessionPlay(boolean init, String path) {
         if (TextUtils.isEmpty(path)) return;
         mPlaFilePath = path;
@@ -476,13 +489,7 @@ public class VoiceManager {
         list.clear();
     }
 
-    /**
-     * 播放录音准备工作
-     *
-     * @param mp
-     * @param file
-     * @return
-     */
+
     private boolean prepareMedia(MediaPlayer mp, String file) {
         boolean result = false;
 
@@ -496,12 +503,6 @@ public class VoiceManager {
         return result;
     }
 
-    /**
-     * 播放录音开始
-     *
-     * @param mp
-     * @return
-     */
     private boolean playMedia(MediaPlayer mp) {
         boolean result = false;
 
@@ -535,6 +536,46 @@ public class VoiceManager {
         }
         return result;
     }
+
+
+    private View.OnClickListener mRewListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            if(mMediaPlayer == null){
+                return;
+            }
+            int pos = mMediaPlayer.getCurrentPosition();
+            if(pos >= 15000){
+                pos -= 15000; // milliseconds
+                mMediaPlayer.seekTo(pos);
+            }else{
+                Toast.makeText(mActivity,"There is no 15s before",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private View.OnClickListener mFfwdListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            if(mMediaPlayer == null){
+                return;
+            }
+            if(mMediaPlayer.getDuration()-mMediaPlayer.getCurrentPosition()>15000){
+                int pos = mMediaPlayer.getCurrentPosition();
+                pos += 15000; // milliseconds
+                mMediaPlayer.seekTo(pos);
+            }else{
+                Toast.makeText(mActivity,"There is no 15s left",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    public View.OnClickListener getmRewListener() {
+        return mRewListener;
+    }
+
+    public View.OnClickListener getmFfwdListener() {
+        return mFfwdListener;
+    }
+
 
     /**
      * 停止播放
@@ -581,13 +622,7 @@ public class VoiceManager {
         return result;
     }
 
-    /**
-     * 停止录音
-     *
-     * @param mr
-     * @param release
-     * @return
-     */
+
     private boolean stopRecorder(MediaRecorder mr, boolean release) {
         boolean result = false;
 
@@ -605,14 +640,7 @@ public class VoiceManager {
         return result;
     }
 
-    /**
-     * 录音准备工作 ，开始录音
-     *
-     * @param mr
-     * @param start
-     * @return
-     */
-    @SuppressWarnings("deprecation")
+
     private File prepareRecorder(MediaRecorder mr, boolean start) {
         File recFile = null;
         if (mr == null) return null;
@@ -634,4 +662,6 @@ public class VoiceManager {
         }
         return recFile;
     }
+
+
 }

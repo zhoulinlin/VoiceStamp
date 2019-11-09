@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
         mRecordAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView.Adapter adapter, View v, int position) {
-                RecordPlayActivity.actionStart(MainActivity.this,mRecords.get(position).getLocalPath(),mRecords.get(position).getRecordId());
+                RecordPlayActivity.actionStart(MainActivity.this,mRecords.get(position).getLocalPath(),mRecords.get(position).getRecordId(),position);
             }
         });
 

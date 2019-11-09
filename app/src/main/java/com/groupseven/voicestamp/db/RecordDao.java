@@ -100,11 +100,6 @@ public class RecordDao extends DBHelper {
 		return recordList;
 	}
 
-//
-//	public boolean deleteRecordByRecordId(String recorId) {
-//		return delete(RecordColumns.RECORD_ID + "=?",
-//				recorId,false);
-//	}
 
 	public boolean deleteRecordByRecordId(String recorId) {
 		int result = delete(RecordColumns.RECORD_ID + "=?",
@@ -112,6 +107,50 @@ public class RecordDao extends DBHelper {
 
 		return result > 0;
 	}
+
+
+	public Record getRecordByRecordId(String recordId) {
+
+		Record record = null;
+		String[] param = new String[1];
+		param[0] = recordId;
+		String sql = "select * from "+TABLE_NAME+" where "+ RecordColumns.RECORD_ID+" = ? ";
+		Cursor cursor = this.query(sql, param);
+
+		if (cursor == null) {
+			return null;
+		}
+
+		if (cursor.moveToNext()) {
+			record = getRecordBeanFromCursor(cursor);
+		}
+		if (cursor != null) {
+			cursor.close();
+		}
+		return record;
+	}
+
+	public Record getRecordByAutoId(int autoId) {
+
+		Record record = null;
+		String[] param = new String[1];
+		param[0] = autoId+"";
+		String sql = "select * from "+TABLE_NAME+" where _id = ? ";
+		Cursor cursor = this.query(sql, param);
+
+		if (cursor == null) {
+			return null;
+		}
+
+		if (cursor.moveToNext()) {
+			record = getRecordBeanFromCursor(cursor);
+		}
+		if (cursor != null) {
+			cursor.close();
+		}
+		return record;
+	}
+
 
 
 	public Record getRecordBeanFromCursor(Cursor cursor) {
@@ -123,9 +162,12 @@ public class RecordDao extends DBHelper {
 		record.setRecordId(getString(cursor,RecordColumns.RECORD_ID));
 		record.setRecordTitle(getString(cursor,RecordColumns.TITLE));
 		record.setUserId(getString(cursor,RecordColumns.USER_ID));
+		record.setAutoId(getInt(cursor,"_id"));
 
 		return record;
 	}
+
+
 
 
 	public ContentValues getContentValues(Record record) {

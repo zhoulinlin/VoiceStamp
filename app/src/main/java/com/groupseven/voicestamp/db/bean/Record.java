@@ -8,6 +8,15 @@ public class Record {
     private String duration;
     private String recordId;
     private String localPath;
+    private int autoId = -1;
+
+    public int getAutoId() {
+        return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
 
     public String getUserId() {
         return userId;

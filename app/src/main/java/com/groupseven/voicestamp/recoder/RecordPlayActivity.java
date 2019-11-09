@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.groupseven.voicestamp.mainlist.activity.BaseActivity;
 import com.groupseven.voicestamp.mainlist.adapter.RecordAdapter;
 import com.groupseven.voicestamp.mainlist.adapter.TagsAdapter;
 import com.groupseven.voicestamp.mainlist.views.SlideRecyclerView;
+import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ public class RecordPlayActivity extends BaseActivity {
 
     private static final String RECORD_ID ="record_id";
 
+    private static final String RECORD_POSITION ="record_position";
+
     private SlideRecyclerView recycler_view_list;
 
     private List<RecTag> mTags;
@@ -40,10 +44,15 @@ public class RecordPlayActivity extends BaseActivity {
 
     private String mRecordId;
 
-    public static void actionStart(Context context,String localPath,String recordId) {
+    private List<Record> mRecords;
+
+    private int curPosition;
+
+    public static void actionStart(Context context,String localPath,String recordId,int position) {
         Intent intent = new Intent(context, RecordPlayActivity.class);
         intent.putExtra(LOCAL_PATH,localPath);
         intent.putExtra(RECORD_ID,recordId);
+        intent.putExtra(RECORD_POSITION,position);
         context.startActivity(intent);
     }
 
@@ -58,6 +67,8 @@ public class RecordPlayActivity extends BaseActivity {
         String mRecPath = getIntent().getStringExtra(LOCAL_PATH);
 
         mRecordId = getIntent().getStringExtra(RECORD_ID);
+
+        curPosition = getIntent().getIntExtra(RECORD_POSITION,-1);
 
         if(TextUtils.isEmpty(mRecPath)){
             Toast.makeText(this,"error!",Toast.LENGTH_SHORT).show();
@@ -80,7 +91,61 @@ public class RecordPlayActivity extends BaseActivity {
             }
         });
 
+        findViewById(R.id.play_back).setOnClickListener(voiceManager.getmRewListener());
+
+        findViewById(R.id.play_quick).setOnClickListener(voiceManager.getmFfwdListener());
+
+        findViewById(R.id.iv_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playNeighbor(true);
+            }
+        });
+
+        findViewById(R.id.iv_pre).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playNeighbor(false);
+            }
+        });
+
         voiceManager.sessionPlay(true, mRecPath);
+    }
+
+    private void playNeighbor(boolean isNext){
+
+        if(mRecords == null || mRecords.size() == 0){
+            mRecords = DBController.getInstance().getRecordDao().queryRecordList(SharedPreferencesUtil.getUserId(RecordPlayActivity.this));
+        }
+
+        if(mRecords == null || mRecords.size() == 0){
+            Toast.makeText(RecordPlayActivity.this,"Play next error!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(isNext && mRecords.size()-1 == curPosition){
+            Toast.makeText(RecordPlayActivity.this,"This is the last one !",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if(!isNext && 0 == curPosition){
+            Toast.makeText(RecordPlayActivity.this,"This is the first one !",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (isNext) {
+            ++curPosition;
+        } else {
+            --curPosition;
+        }
+
+        Record record = mRecords.get(curPosition);
+        voiceManager.stopPlaying();
+        mRecordId = record.getRecordId();
+        voiceManager.sessionPlay(true, record.getLocalPath());
+        initList();
     }
 
 
