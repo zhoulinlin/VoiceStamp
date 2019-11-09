@@ -16,6 +16,8 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.groupseven.voicestamp.R;
+import com.groupseven.voicestamp.login.data.LoginCallback;
+import com.groupseven.voicestamp.login.data.Result;
 import com.groupseven.voicestamp.mainlist.activity.MainActivity;
 import com.groupseven.voicestamp.tools.DialogFactory;
 
@@ -146,8 +150,35 @@ public class LoginActivity extends AppCompatActivity {
         agreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              DialogFactory.chooseDialog(LoginActivity.this, "Agreement", "messageaaaaaaa", "Agree","Disagree",null,
-                        null, true);
+
+                loadingProgressBar.setVisibility(View.VISIBLE);
+
+                loginViewModel.getAgreement(new LoginCallback() {
+                    @Override
+                    public void onHttpFinish(final Result result) {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingProgressBar.setVisibility(View.GONE);
+
+                                if(result instanceof Result.Success){
+                                    String data = (String) ((Result.Success) result).getData();
+
+
+                                    Spanned text = Html.fromHtml(data.toString());
+
+                                    DialogFactory.chooseDialog(LoginActivity.this, "Agreement", text, "Agree","Disagree",null,
+                                            null, true);
+                                }else{
+                                    Toast.makeText(LoginActivity.this,"Get agreement failed!",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+                    }
+                });
             }
         });
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
 import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,6 +49,10 @@ public class MessageDialog extends ABaseDialog {
     }
 
     public void setMessage(String text) {
+        tvMessage.setText(text);
+    }
+
+    public void setSpanMessage(Spanned text) {
         tvMessage.setText(text);
     }
 

@@ -3,6 +3,7 @@ package com.groupseven.voicestamp.tools;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -384,7 +385,7 @@ public class DialogFactory {
    /**
     * 带有标题的弹出框
     */
-    public static void chooseDialog(Context context, String title, String message, String sureString,
+    public static void chooseDialog(Context context, String title, Spanned message, String sureString,
                                     String cancelString, OnClickListener surelistener, OnClickListener cancellistener, boolean Cancelable) {
         if (null == context) {
             return;
@@ -400,7 +401,7 @@ public class DialogFactory {
         msgDialog.setTwoBtnStyle();
         msgDialog.setTitle(title);
         msgDialog.setTitleEnable(true);
-        msgDialog.setMessage(message);
+        msgDialog.setSpanMessage(message);
         msgDialog.setBtn1ClickListener(cancellistener);
         msgDialog.setBtn2ClickListener(surelistener);
         msgDialog.setBtn1Text(cancelString);

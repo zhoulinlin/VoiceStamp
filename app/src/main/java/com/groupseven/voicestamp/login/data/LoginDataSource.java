@@ -25,14 +25,14 @@ public class LoginDataSource {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public void login(final String username,final String password,final LoginCallback callback){
+    public void login(final String username, final String password, final LoginCallback callback) {
 
-        if(callback == null){
+        if (callback == null) {
             return;
         }
 
         try {
-            new  Thread(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -40,19 +40,19 @@ public class LoginDataSource {
 
                         JSONObject requestBody = new JSONObject();
 
-                        requestBody.put("id",username);
-                        requestBody.put("password",password);
+                        requestBody.put("id", username);
+                        requestBody.put("password", password);
                         RequestBody body = RequestBody.create(requestBody.toString(), JSON);
 
-                        String URL= "https://vs.hopeness.net/api/v1/login";
+                        String URL = "https://vs.hopeness.net/api/v1/login";
 
 //                        https://vscdn.hopeness.net/agreement.json
 
                         Response response = null;
 
-                        Log.e(TAG,"<<<<requestBody:"+requestBody.toString());
+                        Log.e(TAG, "<<<<requestBody:" + requestBody.toString());
 
-                        Log.e(TAG,"<<<<url:"+URL);
+                        Log.e(TAG, "<<<<url:" + URL);
                         final Request request = new Request.Builder()
                                 .url(URL)
                                 .post(body).build();
@@ -60,17 +60,17 @@ public class LoginDataSource {
                         Call call = client.newCall(request);
                         response = call.execute();
 
-                        if(response!= null){
+                        if (response != null) {
                             String bodyStr = response.body().string();
 
-                            Log.e(TAG,"<<<<bodyStr:"+ bodyStr);
+                            Log.e(TAG, "<<<<bodyStr:" + bodyStr);
 
                             JSONObject json = new JSONObject(bodyStr);
-                            Log.e(TAG,"<<<<response:"+ json.toString());
+                            Log.e(TAG, "<<<<response:" + json.toString());
                             int code = json.optInt("code");
                             String errMessage = json.optString("message");
 
-                            if(code == 0){
+                            if (code == 0) {
                                 String data = json.optString("data");
                                 JSONObject dataoj = new JSONObject(data);
                                 String uk = dataoj.optString("uk");
@@ -83,12 +83,12 @@ public class LoginDataSource {
                                 fakeUser.setUniqueKey(uk);
                                 callback.onHttpFinish(new Result.Success<>(fakeUser));
 
-                            }else{
-                                Log.e(TAG,"<<<<login failed msg:"+ errMessage);
+                            } else {
+                                Log.e(TAG, "<<<<login failed msg:" + errMessage);
                                 callback.onHttpFinish(new Result.Error(code));
                             }
 
-                            Log.e(TAG,"<<<<e="+response.toString());
+                            Log.e(TAG, "<<<<e=" + response.toString());
                         }
                     } catch (Exception e) {
                         callback.onHttpFinish(new Result.Error(e));
@@ -99,34 +99,79 @@ public class LoginDataSource {
             }).start();
 
         } catch (Exception e) {
-            Log.e(TAG,"<<<<e="+Log.getStackTraceString(e));
+            Log.e(TAG, "<<<<e=" + Log.getStackTraceString(e));
         }
     }
 
     public void logout() {
         try {
-            new  Thread(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        String URL= "https://vs.hopeness.net/api/v1/logout";
+                        String URL = "https://vs.hopeness.net/api/v1/logout";
                         OkHttpClient client = new OkHttpClient();
                         Request request = new Request.Builder().url(URL).build();
                         Response response = client.newCall(request).execute();
 
-                        if(response!= null){
+                        if (response != null) {
                             String bodyStr = response.body().string();
-                            Log.e(TAG,"<<<<logout bodyStr:"+ bodyStr);
+                            Log.e(TAG, "<<<<logout bodyStr:" + bodyStr);
                         }
                     } catch (Exception e) {
-                        Log.e(TAG,"<<<<logout Exception:"+ Log.getStackTraceString(e));
+                        Log.e(TAG, "<<<<logout Exception:" + Log.getStackTraceString(e));
                     }
                 }
             }).start();
 
         } catch (Exception e) {
-            Log.e(TAG,"<<<<logout e="+Log.getStackTraceString(e));
+            Log.e(TAG, "<<<<logout e=" + Log.getStackTraceString(e));
         }
-
     }
+
+
+    public void getAgreement(final LoginCallback callback) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String URL = "https://vscdn.hopeness.net/agreement.json";
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder().url(URL).build();
+                        Response response = client.newCall(request).execute();
+
+                        if (response != null) {
+                            String bodyStr = response.body().string();
+                            Log.e(TAG, "<<<<logout bodyStr:" + bodyStr);
+
+                            JSONObject json = new JSONObject(bodyStr);
+                            Log.e(TAG, "<<<<response:" + json.toString());
+                            int code = json.optInt("code");
+
+                            if (code == 0) {
+                                String data = json.optString("data");
+                                JSONObject object = new JSONObject(data);
+                                String agreement =object.optString("agreement");
+                                callback.onHttpFinish(new Result.Success<>(agreement));
+                            } else {
+                                callback.onHttpFinish(new Result.Error(code));
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "<<<<logout Exception:" + Log.getStackTraceString(e));
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            Log.e(TAG, "<<<<logout e=" + Log.getStackTraceString(e));
+        }
+    }
+
 }
+
+
+
+
+

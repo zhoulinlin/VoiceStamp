@@ -70,6 +70,11 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+
+    public void getAgreement(LoginCallback callbac) {
+        loginRepository.getAgreement(callbac);
+    }
+
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
         if (username == null) {
