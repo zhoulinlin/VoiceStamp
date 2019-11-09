@@ -27,8 +27,6 @@ public class LoginDataSource {
 
     public void login(final String username,final String password,final LoginCallback callback){
 
-
-
         if(callback == null){
             return;
         }
@@ -106,6 +104,29 @@ public class LoginDataSource {
     }
 
     public void logout() {
-        // TODO: revoke authentication
+        try {
+            new  Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String URL= "https://vs.hopeness.net/api/v1/logout";
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder().url(URL).build();
+                        Response response = client.newCall(request).execute();
+
+                        if(response!= null){
+                            String bodyStr = response.body().string();
+                            Log.e(TAG,"<<<<logout bodyStr:"+ bodyStr);
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG,"<<<<logout Exception:"+ Log.getStackTraceString(e));
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            Log.e(TAG,"<<<<logout e="+Log.getStackTraceString(e));
+        }
+
     }
 }

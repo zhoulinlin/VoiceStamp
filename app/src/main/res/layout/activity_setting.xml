@@ -5,25 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/black"
     tools:context=".mainlist.activity.SettingActivity">
 
-    <ImageView
-        android:id="@+id/img_popularize"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/top_bg_signin"/>
+    <TextView
+        android:id="@+id/tv_setting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Setting"
+        >
+    </TextView>
 
    <TextView
-       android:layout_width="wrap_content"
+       android:id="@+id/tv_logout"
+       android:background="@drawable/dialog_round_bg"
+       android:layout_margin="20dip"
+       android:layout_below="@+id/tv_setting_title"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       >
-
-   </TextView>
-
-
-
-
+       android:padding="10dip"
+       android:gravity="center"
+       android:textColor="@android:color/darker_gray"
+       android:text="LOGOUT"
+       />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -31,5 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-    />
+        />
+
+
 </RelativeLayout>

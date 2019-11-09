@@ -56,6 +56,15 @@ public class MainActivity extends BaseActivity {
         recycler_view_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         startBtn = findViewById(R.id.record_btn);
 
+
+
+        findViewById(R.id.tv_setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SettingActivity.actionStart(MainActivity.this);
+            }
+        });
+
         mRecords = DBController.getInstance().getRecordDao().queryRecordList();
 
         mRecordAdapter = new RecordAdapter(this, mRecords);
