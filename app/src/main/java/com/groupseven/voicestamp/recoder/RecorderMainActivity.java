@@ -53,7 +53,7 @@ public class RecorderMainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                final String time  = voiceManager.getTime();
+                final long time  = voiceManager.getTime();
 
                 dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, R.string.tag_input_hint, "Save", new View.OnClickListener() {
                     @Override
@@ -91,11 +91,26 @@ public class RecorderMainActivity extends BaseActivity {
         });
 
         voiceManager.sessionRecord(true);
+
+        findViewById(R.id.tv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.actionStart(RecorderMainActivity.this);
+                finish();
+            }
+        });
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(voiceManager != null){
+//            voiceManager.
+        }
+    }
 
-    private void saveTag(String content,String time,String title){
+    private void saveTag(String content, long time, String title){
 
         RecTag tag = new RecTag();
         tag.setTagType("text");

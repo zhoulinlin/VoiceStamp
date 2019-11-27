@@ -790,6 +790,7 @@ public class DialogFactory {
         MessageDialog msgDialog = new MessageDialog(context);
         msgDialog.setEditTextVisible(true);
         msgDialog.setEditPassword(false);
+        msgDialog.setSelectAll();
         msgDialog.getEditText().setText(editTextContnt);
         msgDialog.setTitle(context.getResources().getString(title));
         msgDialog.setTitleEnable(true);

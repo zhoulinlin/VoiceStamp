@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,9 +18,14 @@ import com.groupseven.voicestamp.db.DBController;
 import com.groupseven.voicestamp.db.bean.RecTag;
 import com.groupseven.voicestamp.db.bean.Record;
 import com.groupseven.voicestamp.mainlist.activity.BaseActivity;
+import com.groupseven.voicestamp.mainlist.activity.MainActivity;
+import com.groupseven.voicestamp.mainlist.adapter.BaseRecyclerViewAdapter;
 import com.groupseven.voicestamp.mainlist.adapter.RecordAdapter;
 import com.groupseven.voicestamp.mainlist.adapter.TagsAdapter;
 import com.groupseven.voicestamp.mainlist.views.SlideRecyclerView;
+import com.groupseven.voicestamp.recoder.utils.CommonTools;
+import com.groupseven.voicestamp.tools.DialogFactory;
+import com.groupseven.voicestamp.tools.MessageDialog;
 import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -48,6 +54,8 @@ public class RecordPlayActivity extends BaseActivity {
 
     private int curPosition;
 
+    private MessageDialog dialog;
+
     public static void actionStart(Context context,String localPath,String recordId,int position) {
         Intent intent = new Intent(context, RecordPlayActivity.class);
         intent.putExtra(LOCAL_PATH,localPath);
@@ -75,9 +83,10 @@ public class RecordPlayActivity extends BaseActivity {
             return;
         }
 
+        voiceManager = new VoiceManager(RecordPlayActivity.this, "/com.groupseven.voicestamp/audio");
+
         initList();
 
-        voiceManager = new VoiceManager(RecordPlayActivity.this, "/com.groupseven.voicestamp/audio");
 
         voiceManager.setVoiceListener(new VoiceCallBack() {
             @Override
@@ -110,6 +119,14 @@ public class RecordPlayActivity extends BaseActivity {
         });
 
         voiceManager.sessionPlay(true, mRecPath);
+
+        findViewById(R.id.tv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                MainActivity.actionStart(RecorderMainActivity.this);
+                finish();
+            }
+        });
     }
 
     private void playNeighbor(boolean isNext){
@@ -148,6 +165,13 @@ public class RecordPlayActivity extends BaseActivity {
         initList();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(voiceManager != null){
+            voiceManager.stopPlaying();
+        }
+    }
 
     private void initList(){
         recycler_view_list =  findViewById(R.id.recycler_view_list);
@@ -171,5 +195,41 @@ public class RecordPlayActivity extends BaseActivity {
                 recycler_view_list.closeMenu();
             }
         });
+
+        mTagAdapter.setOnItemClickListener(voiceManager.getmQuickPlay());
+
+        mTagAdapter.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                final int pos = (int)view.getTag();
+
+                RecTag tag = mTagAdapter.getData().get(pos);
+
+                dialog = DialogFactory.editDiaglog(RecordPlayActivity.this, R.string.tag_input_hint, "Update", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        updateTag(mTagAdapter.getData().get(pos),dialog.getEditText().getText().toString());
+                    }
+                }, R.string.update_tag,tag.getTagContent());
+
+
+                return true;
+            }
+        });
+    }
+
+    private void updateTag(RecTag tag,String content){
+
+        tag.setTagContent(content);
+
+        if(!DBController.getInstance().getTagDao().updateTag(tag)){
+            Log.e("RecordPlayActivity","updateTag failed:" + tag);
+        }else{
+            Log.i("RecordPlayActivity","updateTag success:" + tag);
+            mTagAdapter.notifyDataSetChanged();
+        }
+
     }
 }

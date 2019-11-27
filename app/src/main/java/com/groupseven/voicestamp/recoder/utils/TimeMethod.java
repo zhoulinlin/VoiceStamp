@@ -188,4 +188,13 @@ public class TimeMethod {
 		String time = formatter.format(curDate);
 		return time;
 	}
+
+
+//	public static String getTimeBySecond(long second){
+//
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
+//		Date curDate = new Date(second);
+//		String time = formatter.format(curDate);
+//		return time;
+//	}
 }

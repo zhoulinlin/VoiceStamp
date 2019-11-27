@@ -7,6 +7,16 @@
     tools:context=".recoder.RecorderMainActivity">
 
     <TextView
+        android:id="@+id/tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
+        android:background="@mipmap/back_arrow"
+
+        />
+
+    <TextView
         android:id="@+id/unit_voice_record_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

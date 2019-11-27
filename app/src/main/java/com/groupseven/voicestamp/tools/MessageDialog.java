@@ -112,6 +112,19 @@ public class MessageDialog extends ABaseDialog {
         }
     }
 
+
+    public void setSelectAll(){
+
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setSelectAllOnFocus(true);
+//                editText.setText("title");
+                editText.selectAll();
+            }
+        });
+    }
+
     public void setTitle(String title) {
         super.setTitle(title);
     }

@@ -68,6 +68,28 @@ public class TagDao extends DBHelper {
 	}
 
 
+	public boolean updateTag(RecTag tag){
+
+		if(tag == null){
+			return false;
+		}
+
+		HashMap<String, Object> data  = new HashMap<String, Object>();
+
+		data.put(TagColumns.TAG_TYPE, tag.getTagType());
+		data.put(TagColumns.TAG_TITLE, tag.getTagTitle());
+		data.put(TagColumns.TAG_DATE, tag.getTagDate());
+		data.put(TagColumns.TAG_CONTENT, tag.getTagContent());
+		data.put(TagColumns.RECORD_ID, tag.getRecordId());
+		data.put(TagColumns.EXT_INFO, tag.getExtInfo());
+
+
+		long index = update(getContentValues(tag), TagColumns.EXT_INFO
+				+ " = ?", new String[]{tag.getExtInfo()});
+		return index > 0;
+	}
+
+
 	public ArrayList<RecTag> queryTagList(String recordId){
 
 		ArrayList<RecTag> recTagList = new ArrayList<RecTag>();
@@ -104,7 +126,7 @@ public class TagDao extends DBHelper {
 		recTag.setExtInfo(getString(cursor, TagColumns.EXT_INFO));
 		recTag.setRecordId(getString(cursor, TagColumns.RECORD_ID));
 		recTag.setTagContent(getString(cursor, TagColumns.TAG_CONTENT));
-		recTag.setTagDate(getString(cursor, TagColumns.TAG_DATE));
+		recTag.setTagDate(getLong(cursor, TagColumns.TAG_DATE));
 		recTag.setTagTitle(getString(cursor, TagColumns.TAG_TITLE));
 		recTag.setTagType(getString(cursor, TagColumns.TAG_TYPE));
 

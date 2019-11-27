@@ -15,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.groupseven.voicestamp.R;
+import com.groupseven.voicestamp.db.bean.RecTag;
+import com.groupseven.voicestamp.mainlist.adapter.BaseRecyclerViewAdapter;
 import com.groupseven.voicestamp.recoder.utils.CommonDefine;
 import com.groupseven.voicestamp.recoder.utils.FileUtils;
 import com.groupseven.voicestamp.recoder.utils.TimeMethod;
@@ -302,14 +306,17 @@ public class VoiceManager {
     }
 
 
-    public String getTime(){
+    public long getTime(){
 
         String time = null;
         if(mTVRecTime != null){
 
             time= mTVRecTime.getText().toString();
         }
-        return time;
+//        return time;
+        Log.i(TAG,"mRecTimeSum:"+mRecTimeSum +"mRecTimePrev:" +mRecTimePrev + "time:" +time);
+
+        return mRecTimeSum;
 
     }
     public void sessionRecordEx(boolean init, int resTimeTextId) {
@@ -355,8 +362,8 @@ public class VoiceManager {
 
             mHandler.removeCallbacks(mUpdateMicStatusTimer);
 
-            if (TimeMethod.timeSpanSecond(mRecTimeSum).mSpanSecond == 0) {
-                Toast.makeText(mActivity, "时间过短", Toast.LENGTH_SHORT).show();
+            if (mRecTimeSum == 0) {
+                Toast.makeText(mActivity, "too short", Toast.LENGTH_SHORT).show();
             } else {
 
                 File file = getOutputVoiceFile(mRecList);
@@ -567,6 +574,25 @@ public class VoiceManager {
             }
         }
     };
+
+    private BaseRecyclerViewAdapter.OnItemClickListener mQuickPlay = new BaseRecyclerViewAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(RecyclerView.Adapter adapter, View v, int position) {
+
+            RecTag tag = (RecTag)((BaseRecyclerViewAdapter)adapter).getData().get(position);
+            long time = tag.getTagDate();
+
+            Log.i(TAG,"QuickPlay:" + time);
+            if(time > 0 && time < mMediaPlayer.getDuration()){
+                mMediaPlayer.seekTo((int)time*1000);
+            }
+
+        }
+    };
+
+    public BaseRecyclerViewAdapter.OnItemClickListener getmQuickPlay() {
+        return mQuickPlay;
+    }
 
     public View.OnClickListener getmRewListener() {
         return mRewListener;

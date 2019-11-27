@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> implements View.OnClickListener {
+public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> implements View.OnClickListener,View.OnLongClickListener {
 
     private Context mContext;
     private List<T> mData;
     private int mLayoutId;
 
     private OnItemClickListener mListener;
+
+    private View.OnLongClickListener mLongListener;
 
     BaseRecyclerViewAdapter(Context context, List<T> data, int layoutId) {
         this.mContext = context;
@@ -27,10 +29,15 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         this.mData = data;
     }
 
+    public List<T> getData(){
+        return this.mData;
+    }
+
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
         view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
         return new RecyclerViewHolder(view);
     }
 
@@ -53,9 +60,23 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         }
     }
 
+    @Override
+    public boolean onLongClick(View view) {
+
+        if (mLongListener != null) {
+            mLongListener.onLongClick(view);
+        }
+        return true;
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mListener = onItemClickListener;
     }
+
+    public void setOnLongClickListener(View.OnLongClickListener mLongListener) {
+        this.mLongListener = mLongListener;
+    }
+
 
     /**
      * 数据绑定，由实现类实现

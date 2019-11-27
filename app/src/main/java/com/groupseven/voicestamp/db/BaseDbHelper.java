@@ -395,6 +395,22 @@ public class BaseDbHelper extends SQLiteOpenHelper {
     }
 
 
+    public int update(ContentValues values, String WhereClause, String[] whereArgs) {
+
+        SQLiteDatabase db = null;
+        if (db == null) {
+            db = getWritableDatabase();
+        }
+
+        int row = db.update(TABLE_NAME, values, WhereClause, whereArgs);
+        notifyDBChange();
+        return row;
+    }
+
+
+
+
+
     public int update(HashMap<String, Object> data, boolean isNotifyDBChange, String... keyColumns) {
         SQLiteDatabase db = null;
         int rows = 0;

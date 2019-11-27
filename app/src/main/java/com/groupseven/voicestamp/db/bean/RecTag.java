@@ -5,7 +5,7 @@ public class RecTag {
     private String recordId;
     private String tagType;
     private String tagTitle;
-    private String tagDate;
+    private long tagDate;
     private String tagContent;
     private String extInfo;
 
@@ -33,11 +33,11 @@ public class RecTag {
         this.tagTitle = tagTitle;
     }
 
-    public String getTagDate() {
+    public long getTagDate() {
         return tagDate;
     }
 
-    public void setTagDate(String tagDate) {
+    public void setTagDate(long tagDate) {
         this.tagDate = tagDate;
     }
 

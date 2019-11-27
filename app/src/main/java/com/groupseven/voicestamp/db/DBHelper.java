@@ -36,4 +36,9 @@ public class DBHelper extends BaseDbHelper {
 
 		return cursor.getInt(cursor.getColumnIndexOrThrow(columnName));
 	}
+
+	public long getLong(Cursor cursor, String columnName) {
+
+		return cursor.getLong(cursor.getColumnIndexOrThrow(columnName));
+	}
 }
