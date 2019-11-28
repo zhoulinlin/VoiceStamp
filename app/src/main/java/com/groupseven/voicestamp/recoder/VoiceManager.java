@@ -160,7 +160,7 @@ public class VoiceManager {
                     if (mDeviceState == CommonDefine.MEDIA_STATE_PLAY_DOING) {
                         mDeviceState = CommonDefine.MEDIA_STATE_PLAY_PAUSE;
                         pauseMedia(mMediaPlayer);
-                        mIVPlaOperate.setImageResource(R.mipmap.record_start_play);
+                        mIVPlaOperate.setImageResource(R.mipmap.playicon);
 
                     } else if (mDeviceState == CommonDefine.MEDIA_STATE_PLAY_PAUSE) {
                         mDeviceState = CommonDefine.MEDIA_STATE_PLAY_DOING;
@@ -187,7 +187,7 @@ public class VoiceManager {
                         mHandler.removeMessages(CommonDefine.MSG_TIME_INTERVAL);
                         mDeviceState = CommonDefine.MEDIA_STATE_PLAY_STOP;
 
-                        mIVPlaOperate.setImageResource(R.mipmap.record_start_play);
+                        mIVPlaOperate.setImageResource(R.mipmap.playicon);
                         mTVPlaCurrent.setText("00:00:00");
 
                         stopMedia(mMediaPlayer, true);
@@ -240,7 +240,7 @@ public class VoiceManager {
             mHandler.removeMessages(CommonDefine.MSG_TIME_INTERVAL);
             mDeviceState = CommonDefine.MEDIA_STATE_PLAY_STOP;
 
-            mIVPlaOperate.setImageResource(R.mipmap.record_start_play);
+            mIVPlaOperate.setImageResource(R.mipmap.playicon);
             mTVPlaCurrent.setText("00:00:00");
 
             stopMedia(mMediaPlayer, true);
@@ -600,6 +600,10 @@ public class VoiceManager {
 
     public View.OnClickListener getmFfwdListener() {
         return mFfwdListener;
+    }
+
+    public int getTotalTime(){
+        return (mMediaPlayer.getDuration() / 1000);
     }
 
 

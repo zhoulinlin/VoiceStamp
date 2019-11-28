@@ -851,5 +851,28 @@ public class DialogFactory {
     }
 
 
+    public static TagEditDialog createTagEditDialog(Context context,String sureString,
+                                            OnClickListener surelistener, int title) {
+        if (null == context) {
+            return null;
+        }
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            if (activity.isFinishing()) {
+                return null;
+            }
+        }
+        TagEditDialog msgDialog = new TagEditDialog(context);
+        msgDialog.setTitle(context.getResources().getString(title));
+        msgDialog.setTitleEnable(true);
+        msgDialog.setBtn2ClickListener(surelistener);
+        if (!TextUtils.isEmpty(sureString)) {
+            msgDialog.setBtn2Text(sureString);
+        }
+//        msgDialog.show();
+        return msgDialog;
+    }
+
+
 
 }

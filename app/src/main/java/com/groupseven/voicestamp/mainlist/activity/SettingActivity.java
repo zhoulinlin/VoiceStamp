@@ -59,5 +59,13 @@ public class SettingActivity extends BaseActivity {
                 },3000);
             }
         });
+
+        findViewById(R.id.tv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                MainActivity.actionStart(RecorderMainActivity.this);
+                finish();
+            }
+        });
     }
 }

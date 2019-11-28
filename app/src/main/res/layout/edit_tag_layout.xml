@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/dialog_round_bg"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_message1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#333333"
+                android:text="Title:"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/edittext1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:selectAllOnFocus="true"
+                android:background="@drawable/edittext_bg_selector"
+                android:singleLine="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_message2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#333333"
+                android:text="Content:"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/edittext2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:selectAllOnFocus="true"
+                android:background="@drawable/edittext_bg_selector"
+                android:singleLine="true"
+                 />
+
+            <TextView
+                android:id="@+id/tv_message3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#333333"
+                android:text="Time(s):"
+                android:textSize="16dp" />
+
+            <EditText
+                android:id="@+id/edittext3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:selectAllOnFocus="true"
+                android:background="@drawable/edittext_bg_selector"
+                android:singleLine="true"
+                android:numeric="integer"
+                 />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

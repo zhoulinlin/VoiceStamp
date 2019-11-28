@@ -24,12 +24,15 @@ import com.groupseven.voicestamp.recoder.utils.CommonTools;
 import com.groupseven.voicestamp.tools.DialogFactory;
 import com.groupseven.voicestamp.tools.MessageDialog;
 import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
+import com.groupseven.voicestamp.tools.TagEditDialog;
 
 
 public class RecorderMainActivity extends BaseActivity {
 
     private VoiceManager voiceManager;
     private String mRecPath = "";
+    private TagEditDialog tagDialog;
+
     private MessageDialog dialog;
     private Button btTag;
     private String recordId = CommonTools.getRandomId();
@@ -53,17 +56,30 @@ public class RecorderMainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
+//                final long time  = voiceManager.getTime();
+//
+//                dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, R.string.tag_input_hint, "Save", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        saveTag(dialog.getEditText().getText().toString(),time,CommonTools.getDate());
+//                    }
+//                },R.string.tag_title,CommonTools.getDate());
+
                 final long time  = voiceManager.getTime();
 
-                dialog = DialogFactory.editDiaglog(RecorderMainActivity.this, R.string.tag_input_hint, "Save", new View.OnClickListener() {
+                tagDialog = DialogFactory.createTagEditDialog(RecorderMainActivity.this, "Save", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        saveRecord(path,duration,dialog.getEditText().getText().toString());
-//                        MainActivity.actionStart(RecorderMainActivity.this);
-//                        finish();
-                        saveTag(dialog.getEditText().getText().toString(),time,CommonTools.getDate());
+                        saveTag(tagDialog.getEdittext1(),tagDialog.getEdittext2(),time);
                     }
-                },R.string.tag_title,CommonTools.getDate());
+                }, R.string.tag_title);
+
+                tagDialog.setEditText1(CommonTools.getDate())
+                        .setEditText2(CommonTools.getDate())
+                        .disableSection3();
+
+                tagDialog.show();;
+
             }
         });
 
@@ -110,7 +126,7 @@ public class RecorderMainActivity extends BaseActivity {
         }
     }
 
-    private void saveTag(String content, long time, String title){
+    private void saveTag(String title,String content, long time){
 
         RecTag tag = new RecTag();
         tag.setTagType("text");

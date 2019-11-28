@@ -45,7 +45,7 @@
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="170dp"
-        android:src="@mipmap/record_start_play" />
+        android:src="@mipmap/playicon" />
 
     <ImageView
         android:id="@+id/iv_pre"

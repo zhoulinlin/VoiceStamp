@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.groupseven.voicestamp.recoder.utils.CommonTools;
 import com.groupseven.voicestamp.tools.DialogFactory;
 import com.groupseven.voicestamp.tools.MessageDialog;
 import com.groupseven.voicestamp.tools.SharedPreferencesUtil;
+import com.groupseven.voicestamp.tools.TagEditDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,7 @@ public class RecordPlayActivity extends BaseActivity {
 
     private int curPosition;
 
-    private MessageDialog dialog;
+    private TagEditDialog dialog;
 
     public static void actionStart(Context context,String localPath,String recordId,int position) {
         Intent intent = new Intent(context, RecordPlayActivity.class);
@@ -204,25 +207,63 @@ public class RecordPlayActivity extends BaseActivity {
 
                 final int pos = (int)view.getTag();
 
-                RecTag tag = mTagAdapter.getData().get(pos);
+                final RecTag tag = mTagAdapter.getData().get(pos);
 
-                dialog = DialogFactory.editDiaglog(RecordPlayActivity.this, R.string.tag_input_hint, "Update", new View.OnClickListener() {
+                dialog = DialogFactory.createTagEditDialog(RecordPlayActivity.this, "Update", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        updateTag(mTagAdapter.getData().get(pos),dialog.getEditText().getText().toString());
+                        updateTag(mTagAdapter.getData().get(pos),dialog.getEdittext1(),dialog.getEdittext2(),dialog.getEdittext3());
                     }
-                }, R.string.update_tag,tag.getTagContent());
+                }, R.string.update_tag);
 
+                dialog.setEditListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if(!TextUtils.isEmpty(charSequence)){
+                            int total = voiceManager.getTotalTime();
+
+                            int time = Integer.valueOf(charSequence.toString());
+                            Log.i("onTextChanged","time:"+time +"  total:"+total);
+                            if(time > total){
+                                Toast.makeText(RecordPlayActivity.this,"Max:"+total,Toast.LENGTH_SHORT).show();
+                                dialog.setEditText3(String.valueOf(total-1));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+
+                dialog.setEditText1(tag.getTagTitle())
+                        .setEditText2(tag.getTagContent())
+                        .setEditText3(String.valueOf(tag.getTagDate()));
+                dialog.show();
 
                 return true;
             }
         });
     }
 
-    private void updateTag(RecTag tag,String content){
+    private void updateTag(RecTag tag,String title,String content,String time){
+
+        if(!TextUtils.isEmpty(title)){
+            tag.setTagTitle(title);
+        }
 
         tag.setTagContent(content);
+
+        if(!TextUtils.isEmpty(time)){
+            tag.setTagDate(Long.valueOf(time));
+        }
 
         if(!DBController.getInstance().getTagDao().updateTag(tag)){
             Log.e("RecordPlayActivity","updateTag failed:" + tag);

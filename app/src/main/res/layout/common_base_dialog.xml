@@ -64,7 +64,7 @@
                 android:layout_width="0.5dp"
                 android:layout_height="@dimen/base_dialog_btn"
                 android:background="#D3D5D9"
-                android:visibility="gone" />
+                 />
 
             <TextView
                 android:id="@+id/btn2"
@@ -75,7 +75,7 @@
                 android:singleLine="true"
                 android:text="@string/sure"
                 android:gravity="center_horizontal|center_vertical"
-                android:textColor="#FF8E00"
+                android:textColor="@color/textcolor_blue"
                 android:textSize="@dimen/new_alert_button_text" />
 
             <View
@@ -83,7 +83,7 @@
                 android:layout_width="0.5dp"
                 android:layout_height="@dimen/base_dialog_btn"
                 android:background="#D3D5D9"
-                android:visibility="gone" />
+                />
 
             <TextView
                 android:id="@+id/btn3"
